@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="wechat.dao.UserInfoDao">
+	<cache/>
+	<resultMap id="bean" type="wechat.model.UserInfo">
+		<id column="user_wechat_openId" property="userWechatOpenId" jdbcType="VARCHAR" />
+		<result column="id" property="id" jdbcType="VARCHAR" />
+		<result column="user_name" property="userName" jdbcType="VARCHAR" />
+		<result column="user_sex" property="userSex" jdbcType="INTEGER" />
+		<result column="user_birthday" property="userBirthday" jdbcType="DATE" />
+		<result column="user_wechat_name" property="userWechatName" jdbcType="VARCHAR" />
+		<result column="user_qq" property="userQq" jdbcType="VARCHAR" />
+		<result column="user_institute_id" property="userInstituteId" jdbcType="VARCHAR" />
+		<result column="user_major_id" property="userMajorId" jdbcType="VARCHAR" />
+		<result column="user_high_school" property="userHighSchool" jdbcType="VARCHAR" />
+		<result column="user_home_town_id" property="userHomeTownId" jdbcType="VARCHAR" />
+		<result column="user_home_village_id" property="userHomeVillageId" jdbcType="VARCHAR" />
+		<result column="user_in_university_date" property="userInUniversityDate" jdbcType="VARCHAR" />
+		<result column="user_graduate_university_date" property="userGraduateUniversityDate" jdbcType="VARCHAR" />
+		<result column="user_contact" property="userContact" jdbcType="VARCHAR" />
+		<result column="user_head" property="userHead" jdbcType="VARCHAR" />
+		<result column="user_degree" property="userDegree" jdbcType="INTEGER" />
+		<result column="user_address" property="userAddress" jdbcType="VARCHAR" />
+		<result column="user_dorm_building" property="userDormBuilding" jdbcType="VARCHAR" />
+		<result column="user_dorm_floor" property="userDormFloor" jdbcType="VARCHAR" />
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />		
+		<result column="user_student_no" property="userStudentNo" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<resultMap id="userAndWechat" type="wechat.model.UserInfo">
+		<id column="user_wechat_openId" property="userWechatOpenId" jdbcType="VARCHAR" />
+		<result column="id" property="id" jdbcType="VARCHAR" />
+		<result column="user_name" property="userName" jdbcType="VARCHAR" />
+		<result column="user_sex" property="userSex" jdbcType="INTEGER" />
+		<result column="user_birthday" property="userBirthday" jdbcType="DATE" />
+		<result column="user_wechat_name" property="userWechatName" jdbcType="VARCHAR" />
+		<result column="user_qq" property="userQq" jdbcType="VARCHAR" />
+		<result column="user_institute_id" property="userInstituteId" jdbcType="VARCHAR" />
+		<result column="user_major_id" property="userMajorId" jdbcType="VARCHAR" />
+		<result column="user_high_school" property="userHighSchool" jdbcType="VARCHAR" />
+		<result column="user_home_town_id" property="userHomeTownId" jdbcType="VARCHAR" />
+		<result column="user_home_village_id" property="userHomeVillageId" jdbcType="VARCHAR" />
+		<result column="user_in_university_date" property="userInUniversityDate" jdbcType="VARCHAR" />
+		<result column="user_graduate_university_date" property="userGraduateUniversityDate" jdbcType="VARCHAR" />
+		<result column="user_contact" property="userContact" jdbcType="VARCHAR" />
+		<result column="user_head" property="userHead" jdbcType="VARCHAR" />
+		<result column="user_degree" property="userDegree" jdbcType="INTEGER" />
+		<result column="user_address" property="userAddress" jdbcType="VARCHAR" />
+		<result column="user_dorm_building" property="userDormBuilding" jdbcType="VARCHAR" />
+		<result column="user_dorm_floor" property="userDormFloor" jdbcType="VARCHAR" />
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+		<result column="user_student_no" property="userStudentNo" jdbcType="VARCHAR" />
+		 <association property="wechat" javaType="wechat.model.Wechat">
+            <!-- property 表示com.mybatis.bean.Class中的属性； column 表示表中的列名 -->
+            <id column="openid" property="openid" jdbcType="VARCHAR" />
+            <result column="nickname" property="nickname" jdbcType="VARCHAR" />
+			<result column="headimgurl" property="headimgurl" jdbcType="VARCHAR" />
+        </association>
+		
+	</resultMap>
+	
+	
+	<resultMap id="userInstitMajor" type="wechat.model.UserInfo">
+		<id column="user_wechat_openId" property="userWechatOpenId" jdbcType="VARCHAR" />
+		<result column="user_name" property="userName" jdbcType="VARCHAR" />
+		<result column="user_sex" property="userSex" jdbcType="INTEGER" />
+		<result column="user_birthday" property="userBirthday" jdbcType="DATE" />
+		<result column="user_wechat_name" property="userWechatName" jdbcType="VARCHAR" />
+		<result column="user_qq" property="userQq" jdbcType="VARCHAR" />
+		<result column="user_institute_id" property="userInstituteId" jdbcType="VARCHAR" />
+		<result column="user_major_id" property="userMajorId" jdbcType="VARCHAR" />
+		<result column="user_high_school" property="userHighSchool" jdbcType="VARCHAR" />
+		<result column="user_home_town_id" property="userHomeTownId" jdbcType="VARCHAR" />
+		<result column="user_home_village_id" property="userHomeVillageId" jdbcType="VARCHAR" />
+		<result column="user_in_university_date" property="userInUniversityDate" jdbcType="VARCHAR" />
+		<result column="user_graduate_university_date" property="userGraduateUniversityDate" jdbcType="VARCHAR" />
+		<result column="user_contact" property="userContact" jdbcType="VARCHAR" />
+		<result column="user_head" property="userHead" jdbcType="VARCHAR" />
+		<result column="user_degree" property="userDegree" jdbcType="INTEGER" />
+		<result column="user_address" property="userAddress" jdbcType="VARCHAR" />
+		<result column="user_dorm_building" property="userDormBuilding" jdbcType="VARCHAR" />
+		<result column="user_dorm_floor" property="userDormFloor" jdbcType="VARCHAR" />
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+		<result column="id" property="id" jdbcType="VARCHAR" />
+		<result column="user_student_no" property="userStudentNo" jdbcType="VARCHAR" />
+		
+		 <association property="institute" javaType="wechat.model.Institute">
+            <id column="id" property="id" jdbcType="VARCHAR" />
+			<result column="institute_name" property="instituteName" jdbcType="VARCHAR" />
+	
+        </association>
+         <association property="major" javaType="wechat.model.Major">
+            <id column="id" property="id" jdbcType="VARCHAR" />
+			<result column="major_name" property="majorName" jdbcType="VARCHAR" />
+        </association>
+		
+	</resultMap>
+	
+	<sql id="Base_Column_List">
+		id,user_name,user_sex,user_birthday,user_wechat_name,user_qq,user_institute_id,user_major_id,user_high_school,user_home_town_id,
+		user_home_village_id,user_in_university_date,user_graduate_university_date,user_contact,
+		user_head,user_degree,user_address,user_dorm_building,user_dorm_floor,update_time,user_wechat_openId,
+		user_student_no
+	</sql>
+	
+	<sql id="User_Wechat">
+		u.id,u.user_name,u.user_sex,user_birthday,u.user_wechat_name,u.user_qq,u.user_institute_id,u.user_major_id,u.user_high_school,u.user_home_town_id,
+		u.user_home_village_id,u.user_in_university_date,u.user_graduate_university_date,u.user_contact,
+		u.user_head,u.user_degree,u.user_address,u.user_dorm_building,u.user_dorm_floor,u.update_time,u.user_wechat_openId,
+		u.user_student_no,w.openid,w.nickname,w.headimgurl
+	</sql>
+	
+	<sql id="User_Insti_Major">
+		u.id,u.user_name,u.user_sex,user_birthday,u.user_wechat_name,u.user_qq,u.user_institute_id,u.user_major_id,u.user_high_school,u.user_home_town_id,
+		u.user_home_village_id,u.user_in_university_date,u.user_graduate_university_date,u.user_contact,
+		u.user_head,u.user_degree,u.user_address,u.user_dorm_building,u.user_dorm_floor,u.update_time,u.user_wechat_openId,
+		u.user_student_no,i.id,i.institute_name,m.id,m.major_name
+	</sql>
+	
+	<select id="getUserInfo" resultMap="userInstitMajor"  parameterType="java.lang.String">
+		select 
+		<include refid="User_Insti_Major"></include>
+		from userinfo u 
+		LEFT JOIN (institute i,major m) ON (u.user_institute_id = i.id  and u.user_major_id = m.id  )
+		where 
+		user_wechat_openId = #{openId} 
+		 
+		
+	</select>
+	
+	<insert id="insert" parameterType="wechat.model.UserInfo">
+		INSERT into userinfo 
+		(
+		<include refid="Base_Column_List"></include>
+		) 
+		values
+		
+		<trim suffixOverrides="," suffix=")" prefix="(">
+		#{id,jdbcType=VARCHAR},
+		#{userName,jdbcType=VARCHAR},
+		#{userSex,jdbcType=INTEGER},
+		#{userBirthday,jdbcType=DATE},
+		#{userWechatName,jdbcType=VARCHAR},
+		#{userQq,jdbcType=VARCHAR},
+		#{userInstituteId,jdbcType=VARCHAR},
+		#{userMajorId,jdbcType=VARCHAR},
+		#{userHighSchool,jdbcType=VARCHAR},
+		#{userHomeTownId,jdbcType=VARCHAR},
+		#{userHomeVillageId,jdbcType=VARCHAR},
+		#{userInUniversityDate,jdbcType=VARCHAR},
+		#{userGraduateUniversityDate,jdbcType=VARCHAR},
+		#{userContact,jdbcType=VARCHAR},
+		#{userHead,jdbcType=VARCHAR},
+		#{userDegree,jdbcType=INTEGER},
+		#{userAddress,jdbcType=VARCHAR},
+		#{userDormBuilding,jdbcType=VARCHAR},
+		#{userDormFloor,jdbcType=VARCHAR},
+		#{updateTime,jdbcType=TIMESTAMP},
+		#{userWechatOpenId,jdbcType=VARCHAR},
+		#{userStudentNo,jdbcType=VARCHAR},
+		</trim> 
+		
+		ON DUPLICATE KEY UPDATE 
+		<trim suffixOverrides="," suffix="" prefix="">
+			<if test="userName != null and userName!=''"> user_name= #{userName,jdbcType=VARCHAR}, </if>
+			<if test="userSex != null ">  user_sex = #{userSex,jdbcType=INTEGER} , </if>
+			<if test="userBirthday != null">  user_birthday = #{userBirthday,jdbcType=DATE} , </if>
+			<if test="userWechatName != null and userWechatName!=''"> user_wechat_name= #{userWechatName,jdbcType=VARCHAR}, </if>
+			<if test="userQq != null and userQq!=''"> user_qq= #{userQq,jdbcType=VARCHAR},</if>
+			<if test="userInstituteId != null and userInstituteId!=''">  user_institute_id = #{userInstituteId,jdbcType=VARCHAR} , </if>
+			<if test="userMajorId != null and userMajorId!=''">  user_major_id = #{userMajorId,jdbcType=VARCHAR} , </if>
+			<if test="userHighSchool != null and userHighSchool!=''">  user_high_school = #{userHighSchool,jdbcType=VARCHAR} , </if>
+			<if test="userHomeTownId != null and userHomeTownId!=''">  user_home_town_id = #{userHomeTownId,jdbcType=VARCHAR} , </if>
+			<if test="userHomeVillageId != null and userHomeVillageId!=''">  user_home_village_id = #{userHomeVillageId,jdbcType=VARCHAR} , </if>
+			<if test="userInUniversityDate != null and userInUniversityDate!='' ">  user_in_university_date = #{userInUniversityDate,jdbcType=VARCHAR} , </if>
+			<if test="userGraduateUniversityDate != null and userGraduateUniversityDate!=''">  user_graduate_university_date = #{userGraduateUniversityDate,jdbcType=VARCHAR} , </if>
+			<if test="userContact != null and userContact!=''">  user_contact = #{userContact,jdbcType=VARCHAR} , </if>
+			<if test="userHead != null and userHead!=''">  user_head = #{userHead,jdbcType=VARCHAR} , </if>
+			<if test="userDegree != null">  user_degree = #{userDegree,jdbcType=INTEGER} , </if>
+			<if test="userAddress != null and userAddress!=''">  user_address = #{userAddress,jdbcType=VARCHAR} , </if>
+			<if test="userDormBuilding != null and userDormBuilding!=''">  user_dorm_building = #{userDormBuilding,jdbcType=VARCHAR} , </if>
+			<if test="userDormFloor != null and userDormFloor!=''">  user_dorm_floor = #{userDormFloor,jdbcType=VARCHAR} , </if>
+			<if test="updateTime != null ">  update_time = #{updateTime,jdbcType=TIMESTAMP} , </if>
+			<if test="userStudentNo != null and userStudentNo!=''">  user_student_no = #{userStudentNo,jdbcType=VARCHAR} , </if>
+		</trim>
+
+		
+		
+		
+	</insert>
+	
+	<!-- ON DUPLICATE KEY UPDATE 
+		user_name= #{userName,jdbcType=VARCHAR},user_sex = #{userSex,jdbcType=INTEGER} -->
+		
+	<select id="getList" resultMap="userAndWechat"  parameterType="hashmap">
+		select 
+		<include refid="User_Wechat"></include>
+		
+		from userinfo u,wechat w
+		where u.user_wechat_openId = w.openid
+		<if test="name != null and name!='' ">
+			and u.user_name like #{name,jdbcType=VARCHAR}
+		</if>
+		<if test="instituteId != null and instituteId!=''">
+			and u.user_institute_id = #{instituteId,jdbcType=VARCHAR}
+		</if>
+		limit #{startIndex,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER} 
+	</select>
+	
+	
+	<select id="getCount" resultType="int"  parameterType="hashmap">
+		select 
+		count(u.id)
+		from userinfo u,wechat w
+		where u.user_wechat_openId = w.openid
+		<if test="name != null and name!='' ">
+			and u.user_name like #{name,jdbcType=VARCHAR}
+		</if>
+		<if test="instituteId != null and instituteId!=''">
+			and u.user_institute_id = #{instituteId,jdbcType=VARCHAR}
+		</if>
+	</select>
+	
+	
+	
+</mapper>

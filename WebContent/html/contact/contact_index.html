@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<link type="text/css" rel="stylesheet" href="${constant.projectName}/frame/css/menu.css" />
+<link type="text/css" rel="stylesheet" href="${constant.projectName}/frame/css/jquery.mmenu.all.css" />
+<!% include("../common/import.html"){}  %>
+<script src="${constant.projectName}/js/contact/contact.js"></script>
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>通讯录</title>
+<style type="text/css">
+ulAjaxDetail input {
+-webkit-user-select:none;
+}
+</style>
+<script type="text/javascript">
+	$(function() {
+		$("nav#userinfo_menu").mmenu({
+			counters : true,
+			scrollBugFix : {
+				fix : true
+			},
+			offCanvas : {
+				position : "bottom",
+				zposition : "front",
+				moveBackground : true
+			},
+			autoHeight:true
+		}).on('click', 'a[href^="#/"]', function() {
+			alert("Thank you for clicking, but that's a demo link.");
+			return false;
+		});
+	});
+</script>
+<style type="text/css">
+#ulAjaxDetail {
+	padding-top: 5px;
+	background-color: white;
+}
+
+</style>
+</head>
+<body>
+
+	 <div id="page">
+	
+	<!% include("../common/menu.html"){}%>
+	
+	<section class="ui-container">
+		<div id="myAlert" class="alert alert-success" style="display: none">
+			<a href="#" class="close" data-dismiss="alert">&times;</a> <strong>数据加载中......</strong>
+		</div>
+<!-- 		<div style="margin: 5px 15px;">
+			<img class="img-circle" style="cursor: pointer;"
+				src="${wechat.headimgurl}" height="50px;" width="50px">
+
+			<button style="float: right; text-align: center; margin: 10px;"
+				class="ui-btn"
+				onclick="location.href='${constant.projectName}/contact/updateContact.do?openId=${wechat.openid}'">完善信息</button>
+		</div> -->
+
+		<section id="list">
+			<div class="demo-item">
+				<div class="ui-form-item ui-border-b">
+					<input type="text" id="condition_name" placeholder="请输入查询的姓名"
+						style="padding-top: 15px; padding-left: 0px; float: left; width: 40%; line-height: 14px;">
+					<div style="width: 60%" class="ui-select-group">
+						<div class="ui-select" style="width: 100%">
+							<select id="condition_instituteId">
+								<option value="">全校</option>
+								<!%
+						for(institute in instituteList){
+						%>
+								<option value="${institute.id}">${institute.instituteName}</option>
+								<!%
+						}
+						%>
+							</select>
+						</div>
+
+					</div>
+
+				</div>
+				<div class="demo-block">
+				
+					<ul id="ul-ajaxUserList" class="ui-list ui-list-text ui-border-tb">
+						<!% #ajax ajaxUserList:{
+						var flag =false;
+						%>
+						 
+						<input id="userPage_curPage" type = "hidden" value ="${userPage.curPage}">
+						<input id="userPage_totalPage" type = "hidden" value ="${userPage.totalPage}">
+						<!%for(user in userPage.dateList){
+							flag = true;
+						%>
+						
+						<li class="btn-default ui-border-t ui-arrowlink">
+							<div style="height: 100%;width:35px;">
+								<img class="img-circle" style="cursor: pointer;"
+									src="${user.wechat.headimgurl}" height="30px;" width="30px" style="float:left">
+							</div>
+							<div style="width:auto;" class="ui-list-info" style="float:left;" style="margin-left: 20px;margin-left: 30px;">								
+								<span class="ui-nowrap" >${user.userName}</span>
+								<label style="float:right;">${user.wechat.nickname}</label>
+							</div>
+						</li>
+						<a href=""  data-val="${user.userWechatOpenId}"></a>
+						<!%}elsefor{%>
+						<div class="jumbotron" style="margin-bottom: 0px;">
+							<div class="container" style="height: 100%;">
+								<h1>查询结果为空</h1>
+								<p>请重新选择查询条件</p>
+								</p>
+							</div>
+						</div>
+						<!%}%>
+						
+						<!%if(flag == true&& userPage.curPage < userPage.totalPage){%>
+						<button  class="btn btn-default  btn-group-justified btn-check" style="border:0 !important;border-top: 1px solid #e0e0e0 !important; " data-loading-text="加载中...">加载更多数据</button>
+						<!%}%>
+						
+						<!%}%>
+						
+						 <!-- end ajaxUserList -->
+					</ul>
+				</div>
+
+				<nav id="userinfo_menu">
+					<ul id="ulAjaxDetail" style="padding-top: 5px">
+						<!% #ajax ajaxDetailUser:{%>
+
+						<!% if(has(detailUser)){%>
+						<li>
+							
+							<div class="ui-form-item  ui-border-b">
+								<label>姓名</label>								
+								 <input type="text" readonly="readonly"
+									value="${detailUser.userName}">
+							</div>
+						</li>
+						<li>
+							<div class="ui-form-item  ui-border-b">
+								<label>QQ</label> 
+								<input type="text" readonly="readonly"
+									value="${detailUser.userQq}">
+							</div>
+						</li>
+						<li>
+							<div class="ui-form-item  ui-border-b">
+								<label>学院</label> <input type="text" readonly="readonly"
+									value="${detailUser.institute.instituteName}">
+							</div>
+						</li>
+						<li>
+							<div class="ui-form-item  ui-border-b">
+								<label>专业</label> <input type="text" readonly="readonly"
+									value="${detailUser.Major.majorName}">
+							</div>
+						</li>
+						<li>
+							<div class="ui-form-item  ui-border-b">
+								<label>联系方式</label> <input type="text" readonly="readonly"
+									value="${detailUser.userContact}">
+							</div>
+						</li>
+						<li>
+							<div class="ui-form-item  ui-border-b">
+								<label>宿舍</label> <input type="text" readonly="readonly"
+									value="${detailUser.userDormBuilding}-${detailUser.userDormFloor}">
+							</div>
+						</li>
+						<!%}%> 
+					</ul>
+					
+					<!%}%>
+					<!-- end ajaxDetailUser -->
+				</nav>
+					
+				
+			</div>
+		</section>
+	</section>
+
+	</div>
+	
+</body>
+</html>

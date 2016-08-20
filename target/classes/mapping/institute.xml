@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="wechat.dao.InstituteDao">
+	<cache/> 
+
+	<resultMap id="bean" type="wechat.model.Institute">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<result column="institute_name" property="instituteName" jdbcType="VARCHAR" />
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id,institute_name,update_time	
+	</sql>
+	
+	<select id="getListAllInstitute" resultMap="bean" >
+	 	select 
+	 	<include refid="Base_Column_List" />
+	 	from institute i
+	 	order by i.institute_name
+	</select>
+
+	
+</mapper>

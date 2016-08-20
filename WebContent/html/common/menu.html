@@ -1,0 +1,63 @@
+<script type="text/javascript">
+	$(function() {
+		$("#menu").mmenu(
+				{
+					extensions : [ "theme-black" ],
+					navbar : false,
+					navbars : {
+						height : 4,
+						content : [ '<a href="#/" class="fa fa-phone"></a>',
+								' <img id="menu_img" src="${wechat.headimgurl}" data-val="${wechat.openid}" />',
+								'<a href="#/" class="fa fa-envelope"></a>' ]
+					}
+				})
+	});
+</script>
+
+<style type="text/css">
+.my_ui_btn {
+	display: block!important; 
+	position: absolute!important;
+	right: 10px;
+	top: 50%;
+	margin-top: -15px;
+	height: 30px;
+	line-height:30px;
+	padding: 0 11px;
+	min-width: 55px;
+	text-align: center;
+	font-size: 15px;
+	cursor:pointer;
+}
+a:hover {color：red;} 
+</style>
+
+<header class="ui-header ui-header-positive ui-border-b">
+				<div class="header">
+					<a href="#menu"></a>
+					<h1 style="margin: 10px;">广大陆丰同乡会</h1>
+					
+				</div>
+				<!% if(wechat.isAttestation == 0 ){%>
+				<a id="a_to_attestation" class="my_ui_btn" data-val="${wechat.isAttestation}"  style="border:0 ;background-color:#18b4ed!important;" >验证</a>
+				<!% }else if(wechat.isAttestation == 1){%>
+				<a  id="a_to_attestation" class="my_ui_btn" data-val="${wechat.isAttestation}"  style="border:0 ;background-color:#18b4ed!important;" >等待审核</a>
+				<!% }else if(wechat.isAttestation == 3){%>
+				<a id="a_to_attestation" class="my_ui_btn" data-val="${wechat.isAttestation}"  style="border:0 ;background-color:#18b4ed!important;" >认证失败</a>
+				<!% }%>
+				
+								<!-- height: 30px;line-height: 30px;padding: 0 11px;min-width: 55px;display: inline-block;position: relative;text-align: center;font-size: 15px; -->
+			<!-- <button class="ui-btn" >回首页</button> -->
+</header>
+<nav id="menu">
+		<ul>
+			<li onclick="location.href='${constant.projectName}/index.do?openId=${wechat.openid}'">
+				<a href="#/"><i class="fa fa-home"></i> Home</a>
+			</li>
+			<li onclick="location.href='${constant.projectName}/bdyun/bdyunIndex.do'">
+				<a href="#/about"><i class="fa fa-user"></i> About us</a>
+			</li>
+			<li onclick="location.href='${constant.projectName}/contact/contactIndex.do'"><a
+				href="#/contact"><i class="fa fa-envelope"></i> Contact</a></li>
+		</ul>
+	</nav>

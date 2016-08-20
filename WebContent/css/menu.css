@@ -1,0 +1,82 @@
+
+.mm-menu {
+	background: #4890D7 !important;
+}
+
+.mm-navbar {
+	text-align: center;
+	position: relative;
+	border-bottom: none;
+}
+
+.mm-navbar:before {
+	content: "";
+	display: inline-block;
+	vertical-align: middle;
+	height: 100%;
+	width: 1px;
+}
+
+.mm-navbar>* {
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.mm-navbar img {
+	border: 1px solid rgba(255, 255, 255, 0.6);
+	border-radius: 60px;
+	width: 100px;
+	height: 100px;
+	padding: 10px;
+	margin: 0 10px;
+}
+
+.mm-navbar a {
+	border: 1px solid rgba(255, 255, 255, 0.6);
+	border-radius: 40px;
+	color: rgba(255, 255, 255, 0.6) !important;
+	font-size: 16px !important;
+	line-height: 40px;
+	width: 40px;
+	height: 40px;
+	padding: 0;
+}
+
+.mm-navbar a:hover {
+	border-color: #fff;
+	color: #fff !important;
+}
+
+.mm-listview {
+	text-transform: uppercase;
+	font-size: 12px;
+}
+
+.mm-listview li:last-child:after {
+	content: none;
+	display: none;
+}
+
+.mm-listview li:after {
+	left: 20px !important;
+	right: 20px !important;
+}
+
+.mm-listview a {
+	text-align: center;
+	padding: 30px 0 !important;
+}
+
+.mm-listview a, .mm-listview .fa {
+	color: rgba(255, 255, 255, 0.6);
+}
+
+.mm-listview a:hover, .mm-listview a:hover .fa {
+	color: #fff;
+}
+
+.mm-listview .fa {
+	position: absolute;
+	left: 20px;
+}
+

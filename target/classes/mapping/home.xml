@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="wechat.dao.HomeDao">
+	
+	<cache/> 
+
+	<resultMap id="bean" type="wechat.model.Home">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<result column="home_up_id" property="homeUpId" jdbcType="VARCHAR" />
+		<result column="home_name" property="homeName" jdbcType="VARCHAR" />
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id,home_up_id,home_name,update_time	
+	</sql>
+	
+	<select id="getHomeTown" resultMap="bean" >
+	 	select 
+	 	<include refid="Base_Column_List" />
+	 	from home h
+	 	where  h.home_up_id is null 
+	</select>
+	
+	<select id="getHomeVillage" parameterType="java.lang.String" resultMap="bean" >
+	 	select 
+	 	<include refid="Base_Column_List" />
+	 	from home h
+	 	where  h.home_up_id = #{homeUpId}
+	</select>
+	
+	<select id="isExistTheTown" parameterType="java.lang.Integer" resultType="java.lang.String">
+		select id
+		from home
+		where home_name  = #{homeName} and home_up_id is  null
+	</select>
+	
+	<select id="isExistInTown" parameterType="hashmap" resultType="java.lang.String">
+		select id
+		from home
+		where home_name like #{village,jdbcType=VARCHAR} and  home_up_id = #{homeUpId,jdbcType=VARCHAR}
+	</select>
+	
+	
+	
+	<insert id="insert" parameterType="wechat.model.Home">
+		INSERT into home 
+		(
+		<include refid="Base_Column_List"></include>
+		) 
+		values
+		(
+		#{id,jdbcType=VARCHAR},
+		#{homeUpId,jdbcType=VARCHAR},
+		#{homeName,jdbcType=VARCHAR},
+		#{updateTime,jdbcType=TIMESTAMP}
+		)
+		
+	
+	</insert>
+	
+	<!-- 批量插入wordkDetail  -->
+  <insert id="insertList" parameterType="java.util.List" >
+   		INSERT into home 
+		(
+		<include refid="Base_Column_List"></include>
+		) 
+		values
+    <foreach collection="list" item="item" index="index" separator="," >  
+        (
+		#{item.id,jdbcType=VARCHAR},
+		#{item.homeUpId,jdbcType=VARCHAR},
+		#{item.homeName,jdbcType=VARCHAR},
+		#{item.updateTime,jdbcType=TIMESTAMP}
+		)
+    </foreach>  
+  </insert>
+	
+	
+</mapper>

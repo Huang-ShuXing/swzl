@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="wechat.dao.AccessTokenDao">
+	<resultMap id="bean" type="wechat.model.AccessToken">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<result column="accesstoken" property="token" jdbcType="VARCHAR" />
+		<result column="validTime" property="validTime" jdbcType="TIMESTAMP" />
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id,accesstoken,validTime,update_time	
+	</sql>
+	
+	<select id="getBestNewToken" resultMap="bean" >
+	 	select 
+	 	<include refid="Base_Column_List" />
+	 	from accesstoken	 	
+	 	where validTime = (select max(validTime) from accesstoken)
+	</select>
+	
+	<insert id="insert" parameterType="wechat.model.AccessToken">
+		insert into accesstoken
+		(<include refid="Base_Column_List" />)
+		values
+		(
+		#{id,jdbcType=VARCHAR},
+		#{token,jdbcType=VARCHAR},
+		#{validTime,jdbcType=TIMESTAMP},
+		#{updateTime,jdbcType=TIMESTAMP}
+		)
+	</insert>
+	
+	
+</mapper>

@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<title>完善信息</title>
+<link type="text/css" rel="stylesheet" href="${constant.projectName}/frame/css/menu.css" />
+<link type="text/css" rel="stylesheet" href="${constant.projectName}/frame/css/jquery.mmenu.all.css" />
+ 
+<!% include("../common/import.html"){}  %>
+<script src="${constant.projectName}/js/home/home.js"></script>
+<script src="${constant.projectName}/js/major/major.js"></script>
+<script src="${constant.projectName}/js/contact/update_contact.js"></script>
+
+
+
+<meta charset="utf-8">
+<meta name="viewport"
+	content="initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no">
+<link rel="stylesheet" href="${constant.projectName}/frame/css/vip.css">
+</head>
+<body>
+	 <div id="page">
+	<!% include("../common/menu.html"){}%>
+	<section class="ui-container">
+	<div class="ui-form ui-border-t ">
+		<form id="userInfo_form" action="../contact/save.do" method="post" onkeydown="if(event.keyCode==13)return false;" data-validator-option="{theme:'yellow_right_effect',stopOnError:true}">
+			
+			<div class="ui-form-item ui-border-b">
+				<label> 姓名</label>
+				<input type="text" id="userName" name="userName" style="width: 75%;"data-rule="required" value="${user.userName!}" placeholder="请输入你的姓名"> 
+				<a href="javascript:void(0)" class="ui-icon-close"> </a>
+			</div>
+
+			<div class="ui-form-item ui-border-b">
+				<label> 出生日期</label>
+				<input  type="text" id="userBirthday"
+					data-tip="日期格式如 ：1993-01-01" style="width: 75%;" name="userBirthday" data-rule="required" value="${user.userBirthday!,dateFormat='yyyy-MM-dd'}" placeholder="请选择您的出生日期">
+					<a href="javascript:void(0)" class="ui-icon-close"> </a>
+			</div>
+
+
+			<div class="ui-form-item  ui-border-b " id="div_userStudentNo">
+				<label id="label_userStudentNo"> 学号 </label>
+				 <input  type="text" style="width: 75%;"
+					ata-msg-required="请填写学号"
+        			data-tip="您在广州大学的学号"
+        			data-target="#userStudentNo"
+					value="${user.userStudentNo!}" id="userStudentNo"
+					name="userStudentNo" placeholder="请输入你的学号">
+				<a href="javascript:void(0)" class="ui-icon-close"> </a>
+			</div>
+			<div class="ui-form-item  ui-border-b">
+				<label> QQ </label> <input type="text" data-rule="required" style="width: 75%;" 
+					value="${user.userQq!}" id="userQq" name="userQq"
+					placeholder="请输入你的QQ">
+				<a href="javascript:void(0)" class="ui-icon-close"> </a>
+			</div>
+
+			<div class="ui-form-item ui-form-item-l ui-border-b">
+				<label class="ui-border-r"> 中国 +86 </label> <input type="text" data-rule="required;mobile"
+					style="width:75%"
+					value="${user.userContact!}" id="userContact" name="userContact"
+					placeholder="请输入你联系方式">
+				<a href="javascript:void(0)" class="ui-icon-close"> </a>
+				</a>
+			</div>
+			<div class="ui-form-item ui-form-item-radio ui-border-b">
+				<label>性别 </label> <label class="ui-radio"
+					style="padding-left: 95px;"> 
+					<!% if(has(user)){%> 
+					<input type="radio" name="userSex" ${user.userSex==1? 'checked=checked'} value="1"> 
+					<!%}else {%> 
+					<input type="radio" name="userSex" value="1" checked=checked'> 
+					<!%}%>
+				</label>
+				<p>男</p>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <label class="ui-radio"
+					for="radio"> <!%if(has(user)){%> <input type="radio"
+					name="userSex" ${user.userSex==2? 'checked=checked '} value="2">
+					<!%}else {%> <input type="radio" name="userSex" value="2">
+					<!%}%></label>
+				<p>女</p>
+			</div>
+
+			<div class="ui-form-item ui-border-b">
+				<label>学院</label>
+				<div class="ui-select-group">
+					<div class="ui-select" style="width: 100%">
+						<select id="instituteSelect" name="userInstituteId">
+							<option>请选择</option>
+							<!%
+						for(institute in instituteList){
+							if(has(user)){%>
+							<option value="${institute.id}" 
+							${institute.id== user.userInstituteId?'selected=selected' } >${institute.instituteName}</option>
+							<!%}else {%>
+							<option value="${institute.id}" 
+							 >${institute.instituteName}</option>
+							<!%
+						}}
+						%>
+						</select>
+					</div>
+
+				</div>
+			</div>
+
+
+			<div class="ui-form-item ui-border-b">
+				<label>专业</label>
+				<div class="ui-select-group">
+					<div class="ui-select" style="width: 100%">
+						<select id="majorSelect" name="userMajorId">
+
+							<!% #ajax ajaxMajorList:{%>
+							<option value="">请选择</option>
+							<!% if(has(majorList)){
+										for(major in majorList){
+											if(has(user)){
+							%>
+							<option value="${major.id}" ${major.id==
+								user.userMajorId?'selected=selected' }>${major.majorName}</option>
+							<!%} else {%>
+							<option value="${major.id}">${major.majorName}</option>
+
+							<!% } } } }%>
+						</select>
+					</div>
+				</div>
+			</div>
+
+			<div class="ui-form-item  ui-border-b">
+				<label>高中</label> <input type="text" id="userHighSchool"
+					value="${user.userHighSchool!}" name="userHighSchool"
+					placeholder="请输入你高中所在的学校">
+				<a href="javascript:void(0)" class="ui-icon-close"> </a>
+			</div>
+
+
+			<div class="ui-form-item ui-border-b">
+				<label>籍贯</label>
+				<div class="ui-select-group">
+					<div class="ui-select" style="width: 90%">
+						<select id="townSelect" name="userHomeTownId">
+							<!% #ajax ajaxTown:{%>
+							<option value="">请选择</option>
+							<!% if(has(town)){for(home in town){%> <!% if(has(user)){%>
+							<option value="${home.id}" ${home.id==user.userHomeTownId?
+								'selected=selected' } >${home.homeName}</option>
+							<!%}else {%>
+							<option value="${home.id}">${home.homeName}</option>
+							<!% } } } }%>
+						</select>
+					</div>
+					<span style="float: left" class="ui-txt-muted">镇</span>
+
+				</div>
+			</div>
+
+			<div class="ui-form-item ui-border-b">
+				<label> <input class="ui-btn" type="button"
+					data-toggle="modal" data-target="#addHomeModel"
+					style="margin: 6px auto; width: 60px; padding-left: 0px; text-align: left;"
+					value="手写">
+				</label>
+				<div class="ui-select-group">
+					<div class="ui-select" style="width: 80%">
+						<select id="villageSelect" name="userHomeVillageId">
+
+							<!% #ajax ajaxVillage:{%>
+							<option value="">请选择</option>
+							<!% if(has(village)){
+										for(home in village){
+												if(has(user)){
+												
+							%>
+							<option value="${home.id}" ${home.id==
+								user.userHomeVillageId?'selected=selected' } >${home.homeName}</option>
+							<!%} else {%>
+							<option value="${home.id}">${home.homeName}</option>
+
+							<!% } } } } %>
+						</select>
+
+					</div>
+					<span style="float: left" class="ui-txt-muted">村/街</span>
+
+				</div>
+			</div>
+
+
+
+
+			<div class="ui-form-item ui-border-b">
+				<label>入学时间</label>
+				<div class="ui-select">
+					<select name="userInUniversityDate">
+						<!-- 	<option selected>2012</option>
+						<option>2013</option>
+						<option>2014</option>
+						 -->
+						<!%
+						for(inDate in inDateList){
+						if(has(user)){%>
+						<option value="${inDate}" 
+						${inDate==user.userInUniversityDate?'selected=selected' } >${inDate}</option>
+						<!%}else {%>
+						<option value="${inDate}" 
+						 >${inDate}</option>
+						
+						<!%
+						}}
+						%>
+
+					</select>
+				</div>
+			</div>
+
+			<div class="ui-form-item ui-border-b">
+				<label>毕业时间</label>
+				<div class="ui-select">
+					<select name="userGraduateUniversityDate">
+						<!%
+						for(outDate in outDateList){
+						if(has(user)){%>
+						<option value="${outDate}" ${outDate==user.userGraduateUniversityDate?'selected=selected' } >${outDate}</option>
+						<!%}else { %>
+						<option value="${outDate}" >${outDate}</option>
+						<!%
+						}}
+						%>
+					</select>
+				</div>
+			</div>
+
+			<div class="ui-form-item ui-border-b">
+				<label>学位</label>
+				<div class="ui-select">
+					<select name="userDegree" id="userDegree">
+						<!% if(has(user)){%>
+						<option ${user.userDegree==0? 'selected=selected ' } value="0">本科</option>
+						<option ${user.userDegree==1? 'selected=selected ' } value="1">研究生</option>
+						<!%}else{%>
+						<option  value="0">本科</option>
+						<option  value="1">研究生</option>
+						<!%}%>
+						
+					</select>
+				</div>
+			</div>
+
+
+
+			<div class="ui-form-item ui-border-b">
+				<label>宿舍</label>
+				<div class="ui-select-group">
+					<div class="ui-select" style="width: 40%;">
+						<select name="userDormBuilding">
+							<!%
+						for(dorm in dormList){
+							if(has(user)){%>
+							<option value="${dorm.dormName}" ${dorm.dormName==
+								user.userDormBuilding?'selected=selected' } >${dorm.dormName}</option>
+							<!%}else {%>
+						<option value="${dorm.dormName}" >${dorm.dormName}</option>
+							
+							<!%}
+						}
+						%>
+						</select>
+					</div>
+					<span style="float: left" class="ui-txt-muted">栋</span>
+					<div class="ui-form-item  ui-border-b"
+						style="float: left; width: 40%;">
+						<input type="text" data-rule="required" style="padding-left: 0px;"
+							value="${user.userDormFloor!}" id="userDormFloor"
+							name="userDormFloor" placeholder="宿舍号">
+					</div>
+
+					<span style="float: left" class="ui-txt-muted"> 室</span>
+				</div>
+			</div>
+
+			<div class="ui-form-item ui-border-b">
+				<label> 居住地</label><input type="text" id="userAddress"
+					name="userAddress" placeholder="非毕业生可以不填">
+				<a href="javascript:void(0)" class="ui-icon-close"> </a>
+			</div>
+			<div class="ui-btn-wrap">
+				<button id="btn_submit" type="submit"
+					class="ui-btn-lg ui-btn-primary">保存</button>
+			</div>
+				
+		</form>
+			
+	<!-- 模态框（Modal） -->
+		<div class="modal fade" id="addHomeModel" tabindex="-1" role="dialog"
+			aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="myModalLabel">添加你的村镇</h4>
+					</div>
+					<form id="addHome">
+						<div class="modal-body">
+
+							<div class="ui-form-item  ui-border-b">
+								<label>镇</label> <input type="text" data-rule="required"
+									id="homeTown" name="homeTown" placeholder="请输入你所在镇">
+									<a href="javascript:void(0)" class="ui-icon-close"> </a>
+							</div>
+							<div class="ui-form-item  ui-border-b">
+								<label>村/街</label> <input type="text" data-rule="required"
+									id="homeVillage" name="homeVillage" placeholder="请输入你村/街道">
+									<a href="javascript:void(0)" class="ui-icon-close"> </a>
+							</div>
+
+
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default"
+								data-dismiss="modal">关闭</button>
+							<button type="submit">提交更改</button>
+
+
+						</div>
+
+					</form>
+				</div>
+				<!-- /.modal-content -->
+			</div>
+			<!-- /.modal -->
+		</div>
+		</section>
+	</div>
+	</div>
+</body>
+</html>

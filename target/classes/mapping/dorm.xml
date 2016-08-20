@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="wechat.dao.DormDao">
+	<cache/> 
+	<resultMap id="bean" type="wechat.model.Dorm">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<result column="dorm_name" property="dormName" jdbcType="VARCHAR" />
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id,dorm_name,update_time	
+	</sql>
+	
+	<select id="getListAllDorm" resultMap="bean" >
+	 	select 
+	 	<include refid="Base_Column_List" />
+	 	from dorm d
+	 	order by d.dorm_name asc
+	</select>
+
+	
+</mapper>
