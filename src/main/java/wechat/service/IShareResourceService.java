@@ -16,9 +16,10 @@ public interface IShareResourceService {
 	 * @author Huang_Shuxing
 	 * 2016年8月21日 下午3:56:00
 	 * @param resource
+	 * @param type
 	 * @return
 	 */
-	public ReturnResult insertResource(ShareResource resource);
+	public ReturnResult insertResource(ShareResource resource,String type);
 	/**
 	 * 分页查询百度云资源
 	 * @author Huang_Shuxing

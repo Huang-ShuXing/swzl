@@ -35,7 +35,7 @@ public class BaiDuYunController {
 	private ITypeService typeService;
 	
 	@RequestMapping("bdyunIndex")
-	public String BDYunIndex(Model model,String returnUrl,String tagName,String curPage,String title){
+	public String BDYunIndex(Model model,String returnUrl,String tagName,String curPage,String title,String typeIds){
 		HashMap<String,Object>   params = new HashMap<String, Object>();
 			
 		
@@ -52,6 +52,11 @@ public class BaiDuYunController {
 		}
 		if(!MyStringUtil.isEmpty(title)){
 			params.put("title", "%"+title+"%");
+		}
+		
+		if(!MyStringUtil.isEmpty(typeIds)){
+			String[] arrType = typeIds.split(",");
+			params.put("typeIds", arrType);
 		}
 		
 		
@@ -72,13 +77,14 @@ public class BaiDuYunController {
 	}
 	@RequestMapping("/add")
 	@ResponseBody
-	public ReturnResult add(@ModelAttribute("wechat")Wechat wechat,String title,String url,String password,int[] types){
+	public ReturnResult add(@ModelAttribute("wechat")Wechat wechat,String title,String url,String password,String type,int[] types){
 		ShareResource resource = new ShareResource();
-		resource.setId(java.util.UUID.randomUUID().toString().replace("-", ""));
+		resource.setId(MyStringUtil.getId());
 		resource.setUserinfoId(wechat.getId());
 		resource.setTitle(title);
 		resource.setUrl(url);
 		resource.setPassword(password);
-		return  shareResourceService.insertResource(resource);
+		
+		return  shareResourceService.insertResource(resource,type);
 	}
 }

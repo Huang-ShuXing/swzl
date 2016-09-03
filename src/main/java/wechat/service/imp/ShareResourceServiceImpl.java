@@ -9,9 +9,10 @@ import org.springframework.stereotype.Service;
 
 import wechat.common.Page;
 import wechat.common.ReturnResult;
+import wechat.dao.ResourceTypeDao;
 import wechat.dao.ShareResourceDao;
+import wechat.model.ResourceType;
 import wechat.model.ShareResource;
-import wechat.model.UserInfo;
 import wechat.service.IShareResourceService;
 import wechat.util.MyStringUtil;
 
@@ -24,8 +25,10 @@ public class ShareResourceServiceImpl implements IShareResourceService {
 	
 	@Resource
 	private ShareResourceDao dao;
+	@Resource
+	private ResourceTypeDao rtDao;
 	@Override
-	public ReturnResult insertResource(ShareResource resource) {
+	public ReturnResult insertResource(ShareResource resource,String typeId) {
 		ReturnResult rr = new ReturnResult();
 		
 		if(MyStringUtil.isEmpty(resource.getTitle())){
@@ -39,7 +42,10 @@ public class ShareResourceServiceImpl implements IShareResourceService {
 		if(MyStringUtil.isEmpty(resource.getPassword())){
 			resource.setPassword("无");
 		}
-		if( dao.insert(resource) > 0 ){
+		//插入类型
+		ResourceType rt = new ResourceType(MyStringUtil.getId(),typeId,resource.getId(),null);
+		
+		if( rtDao.insert(rt)>0 && dao.insert(resource) > 0){
 			rr.setMsg("添加成功");
 			rr.setState(ReturnResult.SUCCESS);			
 		}else{

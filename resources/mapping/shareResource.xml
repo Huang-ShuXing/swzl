@@ -43,6 +43,16 @@
 		<if test="title != null and title !=''">
 			and sr.sr_title like #{title,jdbcType=VARCHAR}
 		</if>
+		<if test="typeIds != null and typeIds !=''">
+			and sr.id  in ( select rt.sr_id from resourcetype rt where rt.type_id in 
+				<foreach collection="typeIds" index="index" item="item" open="(" separator="," close=")">
+              	#{item}
+         		</foreach> 
+			 )
+		</if>
+		
+		
+		
 	</select>
 	
 	<select id="getList"  resultMap="bean"  parameterType="hashmap">
@@ -53,6 +63,13 @@
 		
 		<if test="title != null and title !=''">
 			and sr.sr_title like #{title,jdbcType=VARCHAR}
+		</if>
+		<if test="typeIds != null and typeIds !=''">
+			and sr.id  in ( select rt.sr_id from resourcetype rt where rt.type_id in 
+				<foreach collection="typeIds" index="index" item="item" open="(" separator="," close=")">
+              	#{item}
+         		</foreach> 
+			 )
 		</if>
 		order by sr.update_time desc
 		limit #{startIndex,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}

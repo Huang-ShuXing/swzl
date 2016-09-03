@@ -8,4 +8,9 @@ public class MyStringUtil {
 	public static boolean isEmpty(String value){
 		return null == value || "".equals(value.trim()) ;
  	}
+	
+	
+	public static String getId(){
+		return java.util.UUID.randomUUID().toString().replace("-", "");
+	}
 }
