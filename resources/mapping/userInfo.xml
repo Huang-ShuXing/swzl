@@ -197,7 +197,7 @@
 		<include refid="User_Wechat"></include>
 		
 		from userinfo u,wechat w
-		where u.user_wechat_openId = w.openid
+		where u.user_wechat_openId = w.openid and u.user_name is not null
 		<if test="name != null and name!='' ">
 			and u.user_name like #{name,jdbcType=VARCHAR}
 		</if>
@@ -212,7 +212,7 @@
 		select 
 		count(u.id)
 		from userinfo u,wechat w
-		where u.user_wechat_openId = w.openid
+		where u.user_wechat_openId = w.openid and u.user_name is not null
 		<if test="name != null and name!='' ">
 			and u.user_name like #{name,jdbcType=VARCHAR}
 		</if>

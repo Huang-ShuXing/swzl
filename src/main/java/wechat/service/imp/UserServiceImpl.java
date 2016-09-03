@@ -63,19 +63,19 @@ public class UserServiceImpl implements IUserService {
 
 	@Override
 	public Page<UserInfo> getPage(HashMap<String, Object> map, Page<UserInfo> page) {
-		page.setDateList(null);
+		page.setDataList(null);
 		/*获取总页数*/
 		Integer totalRow = dao.getCount(map);
 		if(totalRow ==null){
 			page.setTotalRow(0);
 			return page;				
 		}
-		map.put("startIndex", Page.getStartIndex(page));
+		map.put("startIndex", page.setAndGetStartIndex());
 		map.put("pageSize", page.getPageSize());
 		List<UserInfo> list = this.getList(map);
 		
 		page.setTotalRow(totalRow);
-		page.setDateList(list);
+		page.setDataList(list);
 		return  page;
 		
 	}

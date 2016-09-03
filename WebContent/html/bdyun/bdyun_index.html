@@ -5,77 +5,202 @@
 <link type="text/css" rel="stylesheet" href="${constant.projectName}/frame/css/jquery.mmenu.all.css" />
 
 <!% include("../common/import.html"){}  %>
-
-<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+<script src="${constant.projectName}/js/bdyun/bdyun.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>同乡会相关信息</title>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+	<title>资源地址共享</title>
+<style type="text/css">
+.modal-backdrop.in{
+z-index:0;
+opacity: 0;
+}
+.div_lebel{
+	margin:5px 2px;
+	 width:auto; 
+	 display:inline-block !important; 
+	 display:inline; 	
+}
+.delete_type{
+	vertical-align: super;padding:0px;
+}
+#nav_new_bdyun{
+	background: white !important;
+}
+#nav_new_bdyun .mm-panels{
+	border-top :1px solid #CCCCCC;
+}
+#nav_new_bdyun form div{
+	margin-top : 8px;
+}
+#nav_new_bdyun form div input{
+	padding-left: 12px;
+}
+</style>
+<script type="text/javascript">
+	$(function() {
+		$("#nav_new_bdyun").mmenu({
+			counters : true,
+			scrollBugFix : {
+				fix : true
+			},
+			offCanvas : {
+				position : "bottom",
+				zposition : "front",
+				moveBackground : true
+			},
+			autoHeight:{
+				height: "default"
+			}
+		}).on('click', 'a[href^="#/"]', function() {
+			alert("Thank you for clicking, but that's a demo link.");
+			return false;
+		});
+	});
+</script>
 </head>
 <body>
-	<div id="page">
+	<div id="page" style="padding-bottom:110px;">
 	<!% include("../common/menu.html"){}%>
-	<br />
-	<br />
+	<footer class="ui-footer ui-footer-btn" style="height: auto;">
 	
+	<a href="#nav_new_bdyun" class="ui-btn-lg ui-btn-primary" style="color: aliceblue;">我要分享</a>       
+    	<!-- <form action="" method="post">
+    		<div class="input-group">
+			  <span class="input-group-addon" id="basic-addon1">标题</span>
+			  <input id="sr_title" type="text" class="form-control" placeholder="标题" aria-describedby="basic-addon1">
+			</div>
+			<div class="input-group">
+			  <span class="input-group-addon" id="basic-addon1">地址</span>
+			  <input id="sr_url" type="text" class="form-control" placeholder="地址" aria-describedby="basic-addon1">
+			  
+			</div>
+			<div class="input-group">
+				<span class="input-group-addon" id="basic-addon1">密码</span>
+			  	<input id="sr_password" type="text" class="form-control" placeholder="密码" aria-describedby="basic-addon1">
+			     <span id="btn_add_resource" class="input-group-addon btn" id="basic-addon1">提交</span>
+			</div>
+    	</form> -->
+    	 	
+    </footer>
+	<br />
+	<br />
+		<!% include("../common/loading_div.html"){}  %>
+			<div id="div_label_content" class="ui-border-b" ><!--  -->
+				
+			<div class=" panel-default" style="padding-left: 5px;padding-right:5px;">
+				<div class="panel-heading">
+					<h4 class="panel-title" style="height: 16px;">
+					<label>类别</label>
+						<a data-toggle="collapse" data-parent="#accordion"
+							href="#collapseOne"  >
+								
+							 <span style="float:right" class="glyphicon glyphicon-chevron-down"  aria-hidden="true"></span>
+					    </a>
+							
+					</h4>
+					
+				</div>
+				<div id="collapseOne" class="panel-collapse collapse " style="padding-left: 20px;padding-right:20px;margin-bottom:10px;">
+					
+					<!%for(type in typeList){
+							%>
+						<div class="div_lebel">
+							<span class="label label-success " style="font-size: 90%;">${type.name}
+								<span class="btn delete_type">x</span> <input value="${type.id}"
+								type="hidden">
+							</span>
+						</div>
+							  <!% }%>
+				<div class="div_lebel">
+				</div>
+				</div>
+			</div>
 
-	<div class="panel panel-info" style="margin:5px 20px;">
-		<div class="panel-heading">
-			<h3 class="panel-title">Panel title</h3>
+
+
+
+
+
 		</div>
-		<div class="panel-body">
-			<a href="http://www.baidu.com">百度云</a>
-			<span style="float:right">密码：afss</span>
+			<div class="ui-form-item ui-border-b" style="padding-left: 20px;padding-right:15px;">
+					<input type="text" id="sr_condition_name" placeholder="请输入资源的标题"
+						style="padding-top: 15px; padding-left: 0px; float: left; width: 83%; line-height: 14px;" >
+					<div style="width: 16%;overflow:hidden" >
+						<div style="margin-top: 5px;" >
+						
+							  <button id ="sr_btn_search" type="button" class="btn btn-default" style="width:100%;">查询</button>					
+						</div>
+					</div>
+
+				</div>
+				
+	<div id ="sr_content">
+	<!% #ajax ajaxBDyunList:{
+		var flag =false;
+	%>
+	
+	<input id="bdy_curPage" type = "hidden" value ="${page.curPage}">
+	<input id="bdy_totalPage" type = "hidden" value ="${page.totalPage}">
+	
+	<!%for(bd in page.dataList){
+		flag = true;
+	%>
+		
+	<div class="panel panel-info" style="margin:8px 20px;">
+		<div class="panel-heading" style="padding:0 0 0 15px;height: 42px;">
+			<h3 class="panel-title" >
+			<label style="padding:10px;" >${bd.title}</label>
+			<a class="btn" href="${bd.url}" style="float:right;  padding:10px;" >
+				<span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
+			</a>
+			</h3>
 		</div>
+		<div class="panel-body" style="word-wrap:break-word;word-break:break-all; ">
+			<!-- <h5 style="width:100%;">${bd.url}</h5> -->
+			<p>${bd.url}</p>
+			<span style="float:right">密码：${bd.password}</span>
+		</div>
+	</div>
+	<!% } %>
+		<!%if(flag == true&& page.curPage < page.totalPage){%>
+			<div style="margin:5px 20px;">
+				<button  class="btn btn-default  btn-group-justified btn-check" style="border:0 !important;border-top: 1px solid #e0e0e0 !important;" data-loading-text="加载中...">加载更多</button>
+			</div>
+		<!%}else {%>
+			<div style="margin:5px 20px;">
+				<label style="padding:5px 33%;color:gray;font-size:12px;" >这已是全部的结果~</label>
+			</div>
+		<!%}%>
+	<!% } %>
 	</div>
 	
-	<div class="panel panel-info" style="margin:5px 20px;">
-		<div class="panel-heading">
-			<h3 class="panel-title">Panel title</h3>
-		</div>
-		<div class="panel-body">
-			<a href="http://www.baidu.com">百度云</a>
-			<span style="float:right">密码：afss</span>
-		</div>
-	</div>
 	
-	<div class="panel panel-info" style="margin:5px 20px;">
-		<div class="panel-heading">
-			<h3 class="panel-title">Panel title</h3>
-		</div>
-		<div class="panel-body">
-			<a href="http://www.baidu.com">百度云</a>
-			<span style="float:right">密码：afss</span>
-		</div>
-	</div>
+	<nav id="nav_new_bdyun" >
+		<form action="" method="post" style="">
+							
+    		<div class="ui-form-item  ui-border-b">
+			  <!-- <span class="input-group-addon" id="basic-addon1">标题</span> -->
+		
+			  <input id="sr_title" type="text" class="form-control" placeholder="标题" aria-describedby="basic-addon1">
+			</div>
+			<div class="ui-form-item  ui-border-b">
+			  <input id="sr_url" type="text" class="form-control" placeholder="地址" aria-describedby="basic-addon1">
+			  
+			</div>
+			<div class="ui-form-item  ui-border-b">
+			  	<input id="sr_password" type="text" class="form-control" placeholder="密码" aria-describedby="basic-addon1">
+			</div>
+			<div class="ui-form-item  ui-border-b">
+			 <span id="btn_add_resource" class="input-group-addon btn"  style="border-radius: 4px;border-left: 1;"id="basic-addon1">提交</span>
+			 </div>
+    	</form>   
+	</nav>
 	
-	<div class="panel panel-info" style="margin:5px 20px;">
-		<div class="panel-heading">
-			<h3 class="panel-title">Panel title</h3>
 		</div>
-		<div class="panel-body">
-			百度云
-		</div>
-	</div>
-	<div class="panel panel-info" style="margin:5px 20px;">
-		<div class="panel-heading">
-			<h3 class="panel-title">Panel title</h3>
-		</div>
-		<div class="panel-body">
-			百度云
-		</div>
-	</div>
-	<div class="panel panel-info" style="margin:5px 20px;">
-		<div class="panel-heading">
-			<h3 class="panel-title">Panel title</h3>
-		</div>
-		<div class="panel-body">
-			百度云
-		</div>
-	</div>
-	<div>
-		<label>标题</label>
-		<label>地址</label>
-		<label>密码</label>
-	</div>
+	
+	
+	
 </div>
+
 </body>
 </html>

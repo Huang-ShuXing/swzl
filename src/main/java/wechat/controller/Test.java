@@ -27,9 +27,10 @@ public class Test {
         // 第三方用户唯一凭证密钥  
         /*String appSecret = "cad3ecaf9f57438b41841d66209c810b";*/
     	//浮云医疗
-        String appId = "wxbd0d4522bae39a5e";  
-        String appSecret = "48e57991de20bbd9f09d74447315bf4b";
-  
+        String appId = "wx162c50b1fb4cb31d";  
+        String appSecret = "cad3ecaf9f57438b41841d66209c810b";
+        
+        
         // 调用接口获取access_token  
         AccessToken at = WeixinUtil.getAccessToken(appId, appSecret);  
   
@@ -142,11 +143,11 @@ public class Test {
         btn.setUrl("http://testMyWeiXin.tunnel.qydev.com/ssm_wechat/test/test.do");
         
         ViewButton btn2 = new ViewButton();  
-        btn2.setName("通讯录");  
+        btn2.setName("广大陆丰同乡会");  
         btn2.setType("view");  
         
         // url进行编码
-        String url = "http://testMyWeiXin.tunnel.qydev.com/ssm_wechat/getCode.do";
+        String url = "http://m.lftongxh.cn/ssm_wechat/getCode.do";
         String url_encode = java.net.URLEncoder.encode(url, "utf-8");
         System.out.println(url_encode);
         btn2.setUrl("https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx162c50b1fb4cb31d&"

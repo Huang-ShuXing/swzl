@@ -249,7 +249,8 @@ public class ContactController {
 		ModelAndView mav = new ModelAndView();
 		/*System.out.println(userInfo.getUserBirthday());
 		System.out.println(userInfo.getUserDormBuilding())*/;
-		userInfo.setId(UUID.randomUUID().toString().replace("-", ""));
+		/*userInfo.setId(UUID.randomUUID().toString().replace("-", ""));*/
+		userInfo.setId(wechat.getId());//改成使用wechat的id
 		userInfo.setUpdateTime(new Date());
 		userInfo.setUserWechatOpenId(wechat.getOpenid());
 		userInfo.setUserWechatName(wechat.getNickname());

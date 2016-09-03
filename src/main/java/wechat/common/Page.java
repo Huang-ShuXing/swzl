@@ -1,5 +1,6 @@
 package wechat.common;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Properties;
 
@@ -21,9 +22,20 @@ public class Page<T> {
     private int end;// 结束行
     private int totalPage; // 共多少页
 
-    private List<T> dateList ;
-    
-    public int getCurPage() {
+    private List<T> dataList ;
+    /*private HashMap<String,Object> params ;*/
+    private int startIndex ;
+   
+    public int getStartIndex() {
+    	this.startIndex = (this.getCurPage()-1)*this.getPageSize(); 
+		return  startIndex;
+	}
+
+	public void setStartIndex(int startIndex) {
+		this.startIndex = startIndex;
+	}
+
+	public int getCurPage() {
         return curPage;
     }
 
@@ -75,16 +87,17 @@ public class Page<T> {
         return this.totalPage;
     }
 
-	public List<T> getDateList() {
-		return dateList;
+	public List<T> getDataList() {
+		return dataList;
 	}
 
-	public void setDateList(List<T> dateList) {
-		this.dateList = dateList;
+	public void setDataList(List<T> dataList) {
+		this.dataList = dataList;
 	}
     
-	public static int getStartIndex(Page page){
-		return (page.getCurPage()-1)*page.getPageSize();
+	public int setAndGetStartIndex(){
+		this.startIndex = (this.getCurPage()-1)*this.getPageSize(); 
+		return  startIndex;
 	}
 	
 

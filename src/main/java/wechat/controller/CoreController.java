@@ -96,6 +96,10 @@ public class CoreController {
 		ModelAndView mav = new ModelAndView();
         System.out.println("Code============="+code+"==========state======="+state);
         AccessToken accessToken =OauthCode.getAccessToken(code);
+        if(accessToken == null){
+            accessToken =OauthCode.getAccessToken(code);        	
+        }
+        
         System.out.println(accessToken.getOpenid());
         System.out.println(accessToken.getToken());
         System.out.println(accessToken.getExpiresIn());

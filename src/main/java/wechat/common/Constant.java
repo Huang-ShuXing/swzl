@@ -10,6 +10,8 @@ package wechat.common;
 public class Constant {
 	public static String ctx = "/localhost:8080/ssm_wechat";
 	public static String projectName ="/ssm_wechat";
+	public static int success = 1;
+	public static int fail = 1;
 	
 	public String getCtx(){
 		return ctx;
@@ -17,4 +19,12 @@ public class Constant {
 	public String getProjectName(){
 		return projectName;
 	}
+	
+	public static int getSuccess() {
+		return success;
+	}
+	public static int getFail() {
+		return fail;
+	}
+	
 }

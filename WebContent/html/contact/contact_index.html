@@ -6,8 +6,7 @@
 <!% include("../common/import.html"){}  %>
 <script src="${constant.projectName}/js/contact/contact.js"></script>
 <meta charset="utf-8">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>通讯录</title>
 <style type="text/css">
 ulAjaxDetail input {
@@ -82,7 +81,7 @@ ulAjaxDetail input {
 					</div>
 
 				</div>
-				<div class="demo-block">
+				<div class="demo-block" style="word-wrap:break-word;word-break:break-all; ">
 				
 					<ul id="ul-ajaxUserList" class="ui-list ui-list-text ui-border-tb">
 						<!% #ajax ajaxUserList:{
@@ -91,21 +90,21 @@ ulAjaxDetail input {
 						 
 						<input id="userPage_curPage" type = "hidden" value ="${userPage.curPage}">
 						<input id="userPage_totalPage" type = "hidden" value ="${userPage.totalPage}">
-						<!%for(user in userPage.dateList){
+						<!%for(user in userPage.dataList){
 							flag = true;
 						%>
 						
-						<li class="btn-default ui-border-t ui-arrowlink">
+						<li class="btn-default " style="width:100%;cursor: pointer;padding-left:15px;margin-left:0px;">
 							<div style="height: 100%;width:35px;">
-								<img class="img-circle" style="cursor: pointer;"
+								<img class="img-circle" 
 									src="${user.wechat.headimgurl}" height="30px;" width="30px" style="float:left">
 							</div>
-							<div style="width:auto;" class="ui-list-info" style="float:left;" style="margin-left: 20px;margin-left: 30px;">								
+							<div id="div_content" style="width:auto;padding-left:5px;padding-right:5px;" class="ui-list-info"  >								
 								<span class="ui-nowrap" >${user.userName}</span>
 								<label style="float:right;">${user.wechat.nickname}</label>
 							</div>
 						</li>
-						<a href=""  data-val="${user.userWechatOpenId}"></a>
+						<a href=""  data-val="${user.userWechatOpenId}" style="display: none">1232</a> 
 						<!%}elsefor{%>
 						<div class="jumbotron" style="margin-bottom: 0px;">
 							<div class="container" style="height: 100%;">
@@ -117,7 +116,13 @@ ulAjaxDetail input {
 						<!%}%>
 						
 						<!%if(flag == true&& userPage.curPage < userPage.totalPage){%>
-						<button  class="btn btn-default  btn-group-justified btn-check" style="border:0 !important;border-top: 1px solid #e0e0e0 !important; " data-loading-text="加载中...">加载更多数据</button>
+						<div style="margin:5px 20px;">
+						<button  class="btn btn-default  btn-group-justified btn-check" style="border:0 !important;border-top: 1px solid #e0e0e0 !important; " data-loading-text="加载中...">加载更多</button>
+						</div>
+						<!%}else {%>
+							<div style="margin:5px 20px;border-top:1px solid #e0e0e0">
+								<label style="padding:5px 32%;color:gray;font-size:12px;" >这已经是全部的数据了</label>
+							</div>
 						<!%}%>
 						
 						<!%}%>

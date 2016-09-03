@@ -14,39 +14,7 @@ $(document).ready(function(){
 		
 	});
 	
-	/*$("body").delegate("ul li img", "click", function(){
-		$(this).parent("div").parent("li").click();
-	});
-	
-	$("body").delegate("ul li label", "click", function(){
-		$(this).parent("div").parent("li").click();
-	});*/
-	
-	
-	/*$("body").delegate("ul a", "click", function(){
-		//先验证 然后再判断href
-		var f = $(this).attr("href");
-		if(f!="#userinfo_menu"){
-			var data = isAttestationNoAlert("/ssm_wechat/wechat/isAttestation.do");
-			if(data.state == 1){
-				$(this).attr('href',"#userinfo_menu");
-				$(this).click();
-			}else {
-				if(countNum == 0 ){
-					alert(data.msg);
-					countNum ++;
-				}				
-				$(this).removeAttr('href');
-			}
-		}else {
-			var openId = $(this).attr("data-val");
-			$("#ulAjaxDetail").find($("input")).val("");
-			myAjax("#ulAjaxDetail","/ssm_wechat/contact/ajaxGetUser.do",{"openId":openId},"detailUser","contact/contact_index.html#ajaxDetailUser");
-		}
-	});*/
-	
-	$("body").delegate("ul li", "click", function(){
-		alert("aaaa");
+	$("body").delegate("#ul-ajaxUserList li", "click", function(){
 		//先验证 然后再判断href
 		var atag = $(this).next("a");
 		var f = atag.attr("href");
@@ -77,7 +45,6 @@ $(document).ready(function(){
 	});*/
 	
 	$("body").delegate(".btn-check", "click", function(){
-		alert("xiayiye");
 		 var curPage = $("#userPage_curPage").val();
 		 var totalPage = $("#userPage_totalPage").val();
 		 if(curPage >= totalPage){
@@ -96,28 +63,5 @@ $(document).ready(function(){
 		});
 	 	
 	
-	/**
-	 * 下一页，并且按钮显示正在加载中
-	 * @param select
-	 * @param url
-	 * @param params
-	 * @param tagName
-	 * @param returnUrl
-	 * @param btn
-	 */
-	myAsyncAjaxAppend = function(select,url,params,tagName,returnUrl,btn){
-		 var $btn = btn.button('loading');
-		params["returnUrl"]= returnUrl;
-		params["tagName"]= tagName;
-		$.ajax({  
-	          type : "post",  
-	          url : url,  
-	          data : params,  
-	          async : false,  
-	          success : function(data){  
-	        	  $(select).append(data).show(1000);
-	        	  $btn.button('reset');
-	          }  
-	     }); 
-	};
+	
 });

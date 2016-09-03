@@ -14,10 +14,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import wechat.common.Constant;
+import wechat.dao.UserInfoDao;
 import wechat.dao.WechatDao;
 import wechat.message.response.Article;
 import wechat.message.response.NewsMessage;
 import wechat.message.response.TextMessage;
+import wechat.model.UserInfo;
 import wechat.model.Wechat;
 import wechat.service.ICoreService;
 import wechat.util.MessageUtil;
@@ -30,6 +32,9 @@ public class CoreService implements ICoreService{
 	
 	@Autowired
 	private WechatDao wechatDao;
+	
+	@Autowired
+	private UserInfoDao userInfoDao;
 	
     /** 
      * 处理微信发来的请求 
@@ -169,7 +174,13 @@ public class CoreService implements ICoreService{
 		Properties pro = PropertiesUtil.getProperties(pathUrl);
     	AccessToken accessTken =  WeixinUtil.getAccessToken(pro.get("appid").toString(),pro.get("appsecret").toString());
     	Wechat wechat  =WeixinUtil.getWechat(openId, accessTken.getToken());
-    	wechatDao.insertOrUpdate(wechat);	
+    	UserInfo userInfo = new UserInfo();
+    	userInfo.setId(wechat.getId());
+    	userInfo.setUserWechatOpenId(wechat.getOpenid());
+    	wechatDao.insertOrUpdate(wechat);
+    	userInfoDao.insert(userInfo);
+    	
+    	
     }
     
     /**

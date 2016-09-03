@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="wechat.dao.ShareResourceDao">
+	<resultMap id="bean" type="wechat.model.ShareResource">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<result column="sr_title" property="title" jdbcType="VARCHAR" />
+		<result column="sr_url" property="url" jdbcType="VARCHAR" />
+		<result column="sr_password" property="password" jdbcType="VARCHAR" />
+		<result column="userinfo_id" property="userinfoId" jdbcType="VARCHAR" />
+		<result column="sr_state" property="state" jdbcType="INTEGER" />
+		<result column="sr_disable_num" property="disableNum" jdbcType="INTEGER" />
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+	</resultMap>
+	
+	
+	<sql id="Base_Column_List">
+		id,sr_title,sr_url,sr_password,userinfo_id,sr_state,sr_disable_num,update_time
+	</sql>
+		
+	<insert id="insert" parameterType="wechat.model.ShareResource">
+		insert into shareResource
+		(
+		id ,
+		sr_title ,
+		sr_url ,
+		sr_password  ,
+		userinfo_id
+		)
+		values
+		(
+		#{id,jdbcType=VARCHAR},
+		#{title,jdbcType=VARCHAR},
+		#{url,jdbcType=VARCHAR},
+		#{password,jdbcType=VARCHAR},
+		#{userinfoId,jdbcType=VARCHAR}
+		)
+	</insert>
+	<select id="getCount"  resultType="java.lang.Integer"  parameterType="hashmap">
+		select 
+		count(sr.id)
+		from shareResource sr 
+		where 1 = 1
+		<if test="title != null and title !=''">
+			and sr.sr_title like #{title,jdbcType=VARCHAR}
+		</if>
+	</select>
+	
+	<select id="getList"  resultMap="bean"  parameterType="hashmap">
+		select 
+		<include refid="Base_Column_List"></include>
+		from shareResource sr 
+		where 1 = 1
+		
+		<if test="title != null and title !=''">
+			and sr.sr_title like #{title,jdbcType=VARCHAR}
+		</if>
+		order by sr.update_time desc
+		limit #{startIndex,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
+	</select>
+	
+	
+	
+</mapper>

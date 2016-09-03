@@ -7,7 +7,7 @@
 					navbars : {
 						height : 4,
 						content : [ '<a href="#/" class="fa fa-phone"></a>',
-								' <img id="menu_img" src="${wechat.headimgurl}" data-val="${wechat.openid}" />',
+								' <img style="cursor: pointer;" id="menu_img" src="${wechat.headimgurl}" data-val="${wechat.openid}" />',
 								'<a href="#/" class="fa fa-envelope"></a>' ]
 					}
 				})
@@ -52,12 +52,12 @@ a:hover {color：red;}
 <nav id="menu">
 		<ul>
 			<li onclick="location.href='${constant.projectName}/index.do?openId=${wechat.openid}'">
-				<a href="#/"><i class="fa fa-home"></i> Home</a>
+				<a href="#/"><i class="fa fa-home"></i>主页</a>
 			</li>
 			<li onclick="location.href='${constant.projectName}/bdyun/bdyunIndex.do'">
-				<a href="#/about"><i class="fa fa-user"></i> About us</a>
+				<a href="#/about"><i class="fa fa-user"></i>资源链接分享</a>
 			</li>
 			<li onclick="location.href='${constant.projectName}/contact/contactIndex.do'"><a
-				href="#/contact"><i class="fa fa-envelope"></i> Contact</a></li>
+				href="#/contact"><i class="fa fa-envelope"></i>通讯录</a></li>
 		</ul>
 	</nav>

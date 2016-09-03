@@ -17,6 +17,16 @@
 	content="initial-scale=1, maximum-scale=1, user-scalable=no">
 <meta name="format-detection" content="telephone=no">
 <link rel="stylesheet" href="${constant.projectName}/frame/css/vip.css">
+ <style type="text/css">
+/* #mm-blocker{
+z-index:-1;
+} */
+.modal-backdrop{
+z-index:0;
+}
+</style>
+ 
+
 </head>
 <body>
 	 <div id="page">
@@ -34,21 +44,22 @@
 			<div class="ui-form-item ui-border-b">
 				<label> 出生日期</label>
 				<input  type="text" id="userBirthday"
-					data-tip="日期格式如 ：1993-01-01" style="width: 75%;" name="userBirthday" data-rule="required" value="${user.userBirthday!,dateFormat='yyyy-MM-dd'}" placeholder="请选择您的出生日期">
+					 style="width: 75%;" name="userBirthday" data-rule="required" value="${user.userBirthday!,dateFormat='yyyy-MM-dd'}" placeholder="日期格式如 ：1993-01-01">
 					<a href="javascript:void(0)" class="ui-icon-close"> </a>
 			</div>
+			<!-- data-tip="日期格式如 ：1993-01-01" -->
 
 
 			<div class="ui-form-item  ui-border-b " id="div_userStudentNo">
 				<label id="label_userStudentNo"> 学号 </label>
 				 <input  type="text" style="width: 75%;"
 					ata-msg-required="请填写学号"
-        			data-tip="您在广州大学的学号"
         			data-target="#userStudentNo"
 					value="${user.userStudentNo!}" id="userStudentNo"
 					name="userStudentNo" placeholder="请输入你的学号">
 				<a href="javascript:void(0)" class="ui-icon-close"> </a>
 			</div>
+			<!-- data-tip="您在广州大学的学号"  -->
 			<div class="ui-form-item  ui-border-b">
 				<label> QQ </label> <input type="text" data-rule="required" style="width: 75%;" 
 					value="${user.userQq!}" id="userQq" name="userQq"
@@ -295,7 +306,7 @@
 			
 	<!-- 模态框（Modal） -->
 		<div class="modal fade" id="addHomeModel" tabindex="-1" role="dialog"
-			aria-labelledby="myModalLabel" aria-hidden="true">
+			aria-labelledby="myModalLabel" aria-hidden="true" style="z-index:1040!important;">
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">

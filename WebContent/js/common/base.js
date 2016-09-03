@@ -100,10 +100,47 @@ $(document).ready(function(){
 			 alert("您没有通过审核，请重新提交审核");
 			 $(this).attr("data-val",0);
 			 $(this).text("验证");
-		 }
-		 
-		 
-		
+		 }		
 	 });
+	 
+	 ajaxGetData =  function(url,params){
+		 var getData ;
+			$.ajax({
+		        url: url,
+		        async:false,
+		        data:params,
+		        type: 'POST',
+		        success: function(result){
+		        	getData = result;
+		        }
+		    });
+			return getData;
+	 }
+	 
+	 
+	 /**
+		 * 下一页，并且按钮显示正在加载中
+		 * @param select
+		 * @param url
+		 * @param params
+		 * @param tagName
+		 * @param returnUrl
+		 * @param btn
+		 */
+		myAsyncAjaxAppend = function(select,url,params,tagName,returnUrl,btn){
+			var $btn = btn.button('loading');
+			params["returnUrl"]= returnUrl;
+			params["tagName"]= tagName;
+			$.ajax({  
+		          type : "post",  
+		          url : url,  
+		          data : params,  
+		          async : false,  
+		          success : function(data){  
+		        	  $(select).append(data).show(1000);
+		        	  $btn.button('reset');
+		          }  
+		     }); 
+		};
 	
 });
