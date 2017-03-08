@@ -10,11 +10,31 @@
 		<result column="sr_state" property="state" jdbcType="INTEGER" />
 		<result column="sr_disable_num" property="disableNum" jdbcType="INTEGER" />
 		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+		
+	</resultMap>
+	<resultMap id="sr_type" type="wechat.model.ShareResource">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<result column="sr_title" property="title" jdbcType="VARCHAR" />
+		<result column="sr_url" property="url" jdbcType="VARCHAR" />
+		<result column="sr_password" property="password" jdbcType="VARCHAR" />
+		<result column="userinfo_id" property="userinfoId" jdbcType="VARCHAR" />
+		<result column="sr_state" property="state" jdbcType="INTEGER" />
+		<result column="sr_disable_num" property="disableNum" jdbcType="INTEGER" />
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+		<association property="type" javaType="wechat.model.Type">
+            <id column="id" property="id" jdbcType="VARCHAR" />
+			<result column="t_name" property="name" jdbcType="VARCHAR" />
+        </association>
 	</resultMap>
 	
 	
 	<sql id="Base_Column_List">
 		id,sr_title,sr_url,sr_password,userinfo_id,sr_state,sr_disable_num,update_time
+	</sql>
+	
+	<sql id="Column_List_SR_Type">
+		sr.id,sr.sr_title,sr.sr_url,sr.sr_password,sr.userinfo_id,sr.sr_state,sr.sr_disable_num,sr.update_time,
+		t.id ,t.t_name
 	</sql>
 		
 	<insert id="insert" parameterType="wechat.model.ShareResource">
@@ -38,39 +58,43 @@
 	<select id="getCount"  resultType="java.lang.Integer"  parameterType="hashmap">
 		select 
 		count(sr.id)
-		from shareResource sr 
-		where 1 = 1
-		<if test="title != null and title !=''">
-			and sr.sr_title like #{title,jdbcType=VARCHAR}
-		</if>
+		from shareResource sr , type t 
+		where  (sr.id,t.id)  in ( select rt.sr_id,rt.type_id  from resourcetype rt
+		
 		<if test="typeIds != null and typeIds !=''">
-			and sr.id  in ( select rt.sr_id from resourcetype rt where rt.type_id in 
+			 where rt.type_id in 
 				<foreach collection="typeIds" index="index" item="item" open="(" separator="," close=")">
               	#{item}
          		</foreach> 
-			 )
 		</if>
+		)
+		<if test="title != null and title !=''">
+			and sr.sr_title like #{title,jdbcType=VARCHAR}
+		</if>
+		
 		
 		
 		
 	</select>
 	
-	<select id="getList"  resultMap="bean"  parameterType="hashmap">
+	<select id="getList"  resultMap="sr_type"  parameterType="hashmap">
 		select 
-		<include refid="Base_Column_List"></include>
-		from shareResource sr 
-		where 1 = 1
+		<include refid="Column_List_SR_Type"></include>
+		from shareResource sr , type t 
 		
-		<if test="title != null and title !=''">
-			and sr.sr_title like #{title,jdbcType=VARCHAR}
-		</if>
+		where  (sr.id,t.id)  in ( select rt.sr_id,rt.type_id  from resourcetype rt
+		
 		<if test="typeIds != null and typeIds !=''">
-			and sr.id  in ( select rt.sr_id from resourcetype rt where rt.type_id in 
+			 where rt.type_id in 
 				<foreach collection="typeIds" index="index" item="item" open="(" separator="," close=")">
               	#{item}
          		</foreach> 
-			 )
 		</if>
+		)		
+		<if test="title != null and title !=''">
+			and sr.sr_title like #{title,jdbcType=VARCHAR}
+		</if>
+		
 		order by sr.update_time desc
 		limit #{startIndex,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
 	</select>

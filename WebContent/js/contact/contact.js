@@ -5,12 +5,13 @@ $(document).ready(function(){
 	myAjax("#ulAjaxDetail","/ssm_wechat/contact/ajaxGetUser.do",{"openId":openId},"detailUser","contact/contact_index.html#ajaxDetailUser");
 	}
 	
-	$("#condition_name,#condition_instituteId").change(function(){
+	$("#condition_name,#condition_instituteId,#condition_yearIn").change(function(){
 		 $("#userPage_curPage").val(1);
 		var name = $("#condition_name").val();
 		var instituteId = $("#condition_instituteId").val();
+		var yearIn = $("#condition_yearIn").val();
 		 $("#myAlert").show();
-		 myAsyncAjax("#ul-ajaxUserList","/ssm_wechat/contact/ajaxUserList.do",{"name":name,"instituteId":instituteId},"userPage","contact/contact_index.html#ajaxUserList");
+		 myAsyncAjax("#ul-ajaxUserList","/ssm_wechat/contact/ajaxUserList.do",{"name":name,"instituteId":instituteId,"yearIn":yearIn},"userPage","contact/contact_index.html#ajaxUserList");
 		
 	});
 	

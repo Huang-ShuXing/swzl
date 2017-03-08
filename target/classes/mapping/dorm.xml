@@ -15,7 +15,7 @@
 	 	select 
 	 	<include refid="Base_Column_List" />
 	 	from dorm d
-	 	order by d.dorm_name asc
+	 	order by d.update_time asc
 	</select>
 
 	

@@ -3,17 +3,16 @@
 		$("#menu").mmenu(
 				{
 					extensions : [ "theme-black" ],
-					navbar : false,
+					navbar : true,
 					navbars : {
 						height : 4,
-						content : [ '<a href="#/" class="fa fa-phone"></a>',
-								' <img style="cursor: pointer;" id="menu_img" src="${wechat.headimgurl}" data-val="${wechat.openid}" />',
-								'<a href="#/" class="fa fa-envelope"></a>' ]
+						content : [ ]
 					}
 				})
 	});
+	
+	/* '<span data-val="wechat.openid" style="font-size: 40px;cursor: pointer;" id="menu_img" class="glyphicon glyphicon-user"></span>' */
 </script>
-
 <style type="text/css">
 .my_ui_btn {
 	display: block!important; 
@@ -35,29 +34,26 @@ a:hover {color：red;}
 <header class="ui-header ui-header-positive ui-border-b">
 				<div class="header">
 					<a href="#menu"></a>
-					<h1 style="margin: 10px;">广大陆丰同乡会</h1>
+					<h1 style="margin: 10px;">广大自律会</h1>
 					
 				</div>
-				<!% if(wechat.isAttestation == 0 ){%>
-				<a id="a_to_attestation" class="my_ui_btn" data-val="${wechat.isAttestation}"  style="border:0 ;background-color:#18b4ed!important;" >验证</a>
-				<!% }else if(wechat.isAttestation == 1){%>
-				<a  id="a_to_attestation" class="my_ui_btn" data-val="${wechat.isAttestation}"  style="border:0 ;background-color:#18b4ed!important;" >等待审核</a>
-				<!% }else if(wechat.isAttestation == 3){%>
-				<a id="a_to_attestation" class="my_ui_btn" data-val="${wechat.isAttestation}"  style="border:0 ;background-color:#18b4ed!important;" >认证失败</a>
-				<!% }%>
-				
-								<!-- height: 30px;line-height: 30px;padding: 0 11px;min-width: 55px;display: inline-block;position: relative;text-align: center;font-size: 15px; -->
-			<!-- <button class="ui-btn" >回首页</button> -->
+
+
+<!% include("running.html"){}  %>
 </header>
 <nav id="menu">
 		<ul>
-			<li onclick="location.href='${constant.projectName}/index.do?openId=${wechat.openid}'">
+			<li onclick="location.href='${constant.projectName}/goods/goodsIndex.do'">
 				<a href="#/"><i class="fa fa-home"></i>主页</a>
 			</li>
-			<li onclick="location.href='${constant.projectName}/bdyun/bdyunIndex.do'">
-				<a href="#/about"><i class="fa fa-user"></i>资源链接分享</a>
+			<li onclick="location.href='${constant.projectName}/goods/getGoods.do?method=0'">
+				<a href="#/about"><i class="fa fa-user"></i>捡到物品</a>
 			</li>
-			<li onclick="location.href='${constant.projectName}/contact/contactIndex.do'"><a
-				href="#/contact"><i class="fa fa-envelope"></i>通讯录</a></li>
+			
+			<li onclick="location.href='${constant.projectName}/goods/getGoods.do?method=0'">
+				<a href="#/about"><i class="fa fa-user"></i>物品报失</a>
+			</li>
+			<!-- <li onclick="#"><a
+				href="#/contact"><i class="fa fa-envelope"></i>通讯录</a></li> -->
 		</ul>
 	</nav>

@@ -1,0 +1,392 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<link type="text/css" rel="stylesheet" href="${constant.projectName}/frame/css/menu.css" />
+<link type="text/css" rel="stylesheet" href="${constant.projectName}/frame/css/jquery.mmenu.all.css" />
+<link rel="stylesheet" href="${constant.projectName}/frame/css/img/style.css">
+<!% include("../common/import.html"){}  %>
+
+<script src="${constant.projectName}/js/manager_goods/manager_goods.js"></script>
+<script src="${constant.projectName}/js/manager_goods/mm.js"></script>
+<script src="${constant.projectName}/frame/js/img/index.js"></script>
+							
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+	<title>失物招领</title>
+<style type="text/css">
+ 
+.dotline { 
+	margin-top: 0px; 
+    margin-bottom: 15px;
+    
+} 
+
+.modal-backdrop.in{
+z-index:0;
+opacity: 0;
+}
+.div_lebel{
+	 margin:5px 2px;
+	 width:auto; 
+	 display:inline-block !important; 
+	 display:inline; 	
+}
+.delete_type{
+	vertical-align: super;padding:0px;
+}
+#nav_new_bdyun{
+	background: white !important;
+}
+#nav_new_bdyun .mm-panels{
+	border-top :1px solid #CCCCCC;
+}
+#nav_new_bdyun form div{
+	margin-top : 8px;
+}
+#nav_new_bdyun form div input{
+	padding-left: 12px;
+}
+.clsCheckBox{  
+    display:none !important;  
+  }
+ .sds{
+ 	position: absolute;
+	display: block;
+	left: 0;
+	top: 0;
+	overflow: hidden;
+ 	height: 0;
+ 	 width: 0;
+   /*  border-left: 50px solid transparent; */
+    border-right: 20px solid transparent; 
+    border-top: 20px solid #FFEA00;
+    }
+ .border_1_solid{
+ 	border-color: rgba(241, 197, 133, 0.92) !important; 
+ 	background-color: rgba(241, 197, 133, 0.92);
+    color: #ec0505 !important;
+ }
+ .btn_my{
+ color: #333;
+ /* background-color: #fff; */
+ /* border-color: #ccc; */
+ padding: 4px 8px;
+ font-size: 85%; 
+ border-radius:0;
+ }
+ /*  .btn_my:hover, .btn_my:focus, .btn_my:active, .btn_my.active {
+ 	border: 1px solid #00a5e0;
+ }  */
+ .foot_btn{
+font-size: 18px;
+height: 44px;
+line-height: 44px;
+display: table-cell;
+width: 1%;
+border-radius: 0;
+text-align: center;
+ }
+.my_label{
+float:right; padding: 7px;margin: 6px 2px 0px 0px;
+background-color:#DDD;
+color:#3e3434cc;
+border-radius: 10px;
+}
+.table_panel{
+margin:  5px  auto;
+border-radius:4px;
+width: 75%;
+text-align: center;
+}
+.table_panel a{
+display: inline-block;
+width: 28%;
+text-align: center;
+position: relative;
+color: #ED5634;
+border: 1px solid #ED5634;
+}
+
+.choose{
+background-color: #ED5634;
+color: #fff  !important;
+}
+ 
+</style>
+<script type="text/javascript">
+	$(function() {
+		$("#nav_new_bdyun").mmenu({
+			counters : true,
+			scrollBugFix : {
+				fix : true
+			},
+			offCanvas : {
+				position : "bottom",
+				zposition : "front",
+				moveBackground : true
+			},
+			autoHeight:{
+				height: "default"
+			}
+		}).on('click', 'a[href^="#/"]', function() {
+			alert("Thank you for clicking, but that's a demo link.");
+			return false;
+		});
+	});
+	
+       
+	$( document ).ready(function() { 
+		//$( ".hsldr-container" ).hslider("navBar:false"); // create slider
+		$( ".hsldr-container" ).hslider({
+		  navBar: true,
+		  auto: true,
+		  delay: 4000
+		});
+	});	
+
+</script>
+</head>
+<body>
+	<div id="page" style="padding-bottom:60px;">
+	<!% include("../common/menu.html"){}%>
+	
+	<br />
+	<br />
+		<!% include("../common/loading_div.html"){}  %>
+			<div id="div_label_content"  ><!-- class="ui-border-b"  -->
+	
+			<div class="table_panel">
+                 <a id ="id_menu_get" data-val="0" href="#"  style="left: 6px;    border-top-left-radius: 4px;border-bottom-left-radius: 4px;">寻主</a>
+                 <a id ="id_menu_all"  data-val="-1" href="#"  class="choose" >全部</a>
+                 <a id ="id_menu_lost" data-val="1" href="#"  style="left: -6px;border-bottom-right-radius: 4px;border-top-right-radius: 4px;">寻物</a>
+    		</div>				
+			<div class=" panel-default" style="padding-left: 5px;padding-right:5px;">
+				<!-- <div class="panel-heading">
+				<a data-toggle="collapse" data-parent="#accordion"
+							href="#collapse_type_label"  >
+					<h4 class="panel-title" style="height: 16px;">
+					<label>类别</label>
+							 <span style="float:right" class="glyphicon glyphicon-chevron-down"  aria-hidden="true"></span>
+					</h4>
+					</a>
+					
+				</div> -->
+				<div id="collapse_type_label" class="panel-collapse " style="padding-left: 15px;padding-right:15px;margin-bottom:5px;">
+					<!% if(has(typeList)){%>
+					<!%for(type in typeList){
+							%>
+						<div class="div_lebel" style="border: 1px solid #ccc;" >
+							<div style="position: relative;">
+							<span class="btn btn_my " >${type.name}
+								<input value="${type.id}" type="checkbox"  class="clsCheckBox">
+							</span>
+							<div></div><!-- 添加选择的样式sds -->
+							</div>
+							
+						</div>
+					<!% } %>
+					
+					<!% } %>
+				</div>
+			</div>
+		</div>
+			<div class="ui-form-item" style="padding-left: 20px;padding-right:20px;"><!--  ui-border-b -->
+					<input id="sr_condition_name" placeholder="请输入关键字查询" style=" padding-left: 4px; float: left; width: 80%; line-height: 26px;font-size: 16px; border : 1px solid #CCCCCC;margin-top: 5px;margin-right: 5px;border-left-width: 1px;padding-right: 4px;padding-bottom: 3px;padding-top: 2px;border-radius: 2px;" type="text" >
+					<div style="width: 16%;overflow:hidden;float:right;" >
+						<div style="margin-top: 5px;" >
+							  <button id ="sr_btn_search" type="button" class="btn btn-default" style="width:100%;background-color:#F8F8F8;border-radius: 2px;">查询</button>					
+						</div>
+					</div>
+				</div>
+
+	<div id ="sr_content">
+	<!% #ajax ajaxBDyunList:{
+		var flag =false;
+	%>
+	
+	<input id="bdy_curPage" type = "hidden" value ="${page.curPage}">
+	<input id="bdy_totalPage" type = "hidden" value ="${page.totalPage}">
+	
+	<!%for(goods in page.dataList){
+		flag = true;
+	%>
+		
+	<!-- <div class="panel panel-info" style="margin:8px 20px;"> -->
+	<!-- start  -->
+
+		
+	<div class="panel panel-default" style="margin:4px 20px;">
+				<div class="panel-heading" style="padding:0 0 0 0;height: 42px;">
+				
+					<!% if(goods.goodsStatus ==2 ){ %>
+					<label onclick="mm.backRecord('${goods.id}','${goods.method}','${goods.name}');"  class=" btn btn-success"   style="border-radius: 0px; float: right;border-radius: 0px;float: right;padding: 1px 3px 1px 3px;margin: 6px 15px 0px 6px;">还原</label>
+					<!% }else {%>
+					<label onclick="mm.finishRecord('${goods.id}','${goods.name}');"  class=" btn btn-success"   style="border-radius: 0px; float: right;border-radius: 0px;float: right;padding: 1px 3px 1px 3px;margin: 6px 15px 0px 6px;">完成</label>
+					<!% }%>
+						<label onclick="mm.deleteRecord('${goods.id}','${goods.name}')"  class="btn btn-danger"  style="border-radius: 0px;float: right; border-radius: 0px;float: right;padding: 1px 3px 1px 3px;margin:6px 0px 0px 6px;">删除</label>
+						
+						<a data-toggle="collapse" data-parent="#accordion" href="#${goods.id}_title"  >
+						<h3 class="panel-title" >
+						<label style="padding:10px;" ><strong>${goods.name}</strong></label>
+						
+						<!% if(goods.goodsStatus == 0){ %>
+							<label class="label label-default my_label" >寻主中</label>
+						<!% }else if(goods.goodsStatus==1){%>
+							<label  class="label label-default my_label" >寻物中</label>
+						<!% }else{%>
+							<label  class="label label-success my_label" >物归原主</label>
+						<!% }%>
+						<!% if(goods.goodsStype == '1'){ %>
+						<label  class="label label-default my_label" >一卡通</label>
+						<!% }else if(goods.goodsStype=='2'){%>
+						<label  class="label label-default my_label" >银行卡</label>
+						<!% }else if(goods.goodsStype =='3'){%>
+						<label  class="label label-default my_label" >书籍</label>
+						<!% }else if(goods.goodsStype =='4'){%>
+						<label  class="label label-default my_label" >雨伞</label>
+						<!% }%>
+						
+						</h3>
+						</a>					
+				</div>
+				<div  id="${goods.id}_title"  class="panel-collapse collapse " style="padding-left: 15px;padding-right:15px;margin-bottom:10px;padding-top: 10px;"><!-- id="${goods.id}" -->
+							<div style="position: relative;">
+							<!-- 放图片的地方  -->
+							<!-- 只要显示-->
+							<div class="panel panel-default">
+							<div id="${goods.id}" class="carousel slide" data-ride="carousel">
+								<div class="carousel-inner">
+								<!% for(img in goods.imgList) {
+									 if(img.imgUrl != null ){
+									 if(imgLP.index == 1){ %>
+									 <ul class="row item active" >
+									<li class="col-xs-11" style="padding-left: 32px;">
+									  <img  src="${constant.projectName}/img/getImg.do?url=${img.imgUrl}" class="img-responsive">
+									</li>
+								  </ul>
+								<!%	 } else { %>
+								<ul class="row item">
+									<li class="col-xs-11" style="padding-left: 32px;">
+									   <img  src="${constant.projectName}/img/getImg.do?url=${img.imgUrl}" class="img-responsive">
+									</li>
+									</ul>
+								<!%  } }  }%>
+								</div>
+								<!-- 如果多张图片才显示左右滑动的图案 -->
+								<!% for(imgShowNext in goods.imgList) {
+									if(imgShowNextLP.size > 1) {%>
+									<a class="carousel-control left" href="#${goods.id}" data-slide="prev" style="background-image:none;text-shadow: none;">Previous</a>
+									<a class="carousel-control right" href="#${goods.id}" data-slide="next" style="background-image:none;text-shadow: none;'">Next</a>
+								<!% } }%>
+								
+							  </div>
+							  </div>
+						<!% if(goods.goodsStype == '1'){ %>
+							<!-- 一卡通  -->
+							<div class="panel panel-default">
+							    <div class="panel-body">
+									<span style="font-size:24px;">
+										姓名：${goods.studentName}
+									</span>
+									<hr class=dotline > 
+									学号：${goods.studentCard}
+									<!-- <hr class=dotline > 
+									学院：${goods.studentInstituteName} -->
+									<hr class=dotline > 
+									备注：${goods.goodsComment}
+									<hr class=dotline > 
+									时间：${goods.happendTime!,dateFormat='yyyy-MM-dd '}
+							    </div>
+							</div>
+						<!% }else if(goods.goodsStype=='2'){%>
+							<!-- 银行卡  -->
+							<div class="panel panel-default">
+							    <div class="panel-body">
+									<span style="font-size:20px;">
+									卡号：${goods.bankCard}
+									</span>
+									<hr class=dotline > 
+									<span >
+									银行：${goods.bankName}
+									</span>
+									<hr class=dotline > 
+									备注：${goods.goodsComment}
+									<hr class=dotline > 
+									时间：${goods.happendTime!,dateFormat='yyyy-MM-dd '}
+							    </div>
+							</div>
+						<!% }else {%>
+							<!-- 其他  -->
+							
+							<div class="panel panel-default">
+							    <div class="panel-body">
+									<span style="font-size:24px;">
+									描述：${goods.name}
+									</span>
+									<hr class=dotline > 
+									备注：${goods.goodsComment}
+									<hr class=dotline > 
+									时间：${goods.happendTime!,dateFormat='yyyy-MM-dd '}
+							    </div>
+							</div>
+						<!% }%>
+							<div class="panel panel-default">
+							   
+							    <div class="panel-body">
+									联系人：${goods.peopleName}
+									<hr class=dotline > 
+									学院：${goods.peopleCollege}
+									<hr class=dotline > 
+									联系电话：${goods.peopleContact}
+									<!-- <hr class=dotline > 
+									QQ：${goods.peopleQq}
+									<hr class=dotline > 
+									微信：${goods.peopleWechat} -->
+							    </div>
+							</div>
+							
+							
+							
+							<!-- <hr class=dotline > 
+							<span style="float:right">时间：${goods.happendTime!,dateFormat='yyyy-MM-dd '}</span>
+							<span class="btn btn_my " style="font-size: 90%; border-radius:0;">11
+								<input value="11" type="checkbox"  class="clsCheckBox">
+							</span> -->
+							</div>
+				</div>	
+		</div>
+				
+				
+			
+	<!-- end  -->
+	
+	<!% } elsefor{
+	if(!isFirst){  
+	%>
+	<div class="jumbotron" style="margin-bottom: 0px;">
+		<div class="container" style="height: 100%;">
+			<h1>查询结果为空</h1>
+			<p style="font-size:16px;">捡到物品发个消息可以给大家看到哦~</p>
+			</p>
+		</div>
+	</div> <!%}}
+	if(!isFirst){
+	%>
+		<!%if(flag == true&& page.curPage < page.totalPage){%>
+			<div style="margin:5px 20px;">
+				<button  class="btn btn-default  btn-group-justified btn-check" style="border:0 !important;border-top: 1px solid #e0e0e0 !important;" data-loading-text="加载中...">加载更多</button>
+			</div>
+		<!%}else if(flag ==true){%>
+			<div style="margin:5px 20px;">
+				<label style="padding:5px 33%;color:gray;font-size:12px;" >这已是全部的结果~</label>
+			</div>
+		<!%} }%>
+	<!% } %>
+	</div>
+	
+	
+		</div>	
+</div>
+
+</body>
+</html>

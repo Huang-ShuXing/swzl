@@ -166,22 +166,22 @@
 			<if test="userSex != null ">  user_sex = #{userSex,jdbcType=INTEGER} , </if>
 			<if test="userBirthday != null">  user_birthday = #{userBirthday,jdbcType=DATE} , </if>
 			<if test="userWechatName != null and userWechatName!=''"> user_wechat_name= #{userWechatName,jdbcType=VARCHAR}, </if>
-			<if test="userQq != null and userQq!=''"> user_qq= #{userQq,jdbcType=VARCHAR},</if>
+			<if test="userQq != null "> user_qq= #{userQq,jdbcType=VARCHAR},</if>
 			<if test="userInstituteId != null and userInstituteId!=''">  user_institute_id = #{userInstituteId,jdbcType=VARCHAR} , </if>
 			<if test="userMajorId != null and userMajorId!=''">  user_major_id = #{userMajorId,jdbcType=VARCHAR} , </if>
-			<if test="userHighSchool != null and userHighSchool!=''">  user_high_school = #{userHighSchool,jdbcType=VARCHAR} , </if>
-			<if test="userHomeTownId != null and userHomeTownId!=''">  user_home_town_id = #{userHomeTownId,jdbcType=VARCHAR} , </if>
-			<if test="userHomeVillageId != null and userHomeVillageId!=''">  user_home_village_id = #{userHomeVillageId,jdbcType=VARCHAR} , </if>
+			<if test="userHighSchool != null ">  user_high_school = #{userHighSchool,jdbcType=VARCHAR} , </if>
+			<if test="userHomeTownId != null ">  user_home_town_id = #{userHomeTownId,jdbcType=VARCHAR} , </if>
+			<if test="userHomeVillageId != null ">  user_home_village_id = #{userHomeVillageId,jdbcType=VARCHAR} , </if>
 			<if test="userInUniversityDate != null and userInUniversityDate!='' ">  user_in_university_date = #{userInUniversityDate,jdbcType=VARCHAR} , </if>
 			<if test="userGraduateUniversityDate != null and userGraduateUniversityDate!=''">  user_graduate_university_date = #{userGraduateUniversityDate,jdbcType=VARCHAR} , </if>
-			<if test="userContact != null and userContact!=''">  user_contact = #{userContact,jdbcType=VARCHAR} , </if>
+			<if test="userContact != null ">  user_contact = #{userContact,jdbcType=VARCHAR} , </if>
 			<if test="userHead != null and userHead!=''">  user_head = #{userHead,jdbcType=VARCHAR} , </if>
 			<if test="userDegree != null">  user_degree = #{userDegree,jdbcType=INTEGER} , </if>
-			<if test="userAddress != null and userAddress!=''">  user_address = #{userAddress,jdbcType=VARCHAR} , </if>
-			<if test="userDormBuilding != null and userDormBuilding!=''">  user_dorm_building = #{userDormBuilding,jdbcType=VARCHAR} , </if>
-			<if test="userDormFloor != null and userDormFloor!=''">  user_dorm_floor = #{userDormFloor,jdbcType=VARCHAR} , </if>
+			<if test="userAddress != null ">  user_address = #{userAddress,jdbcType=VARCHAR} , </if>
+			<if test="userDormBuilding != null ">  user_dorm_building = #{userDormBuilding,jdbcType=VARCHAR} , </if>
+			<if test="userDormFloor != null ">  user_dorm_floor = #{userDormFloor,jdbcType=VARCHAR} , </if>
 			<if test="updateTime != null ">  update_time = #{updateTime,jdbcType=TIMESTAMP} , </if>
-			<if test="userStudentNo != null and userStudentNo!=''">  user_student_no = #{userStudentNo,jdbcType=VARCHAR} , </if>
+			<if test="userStudentNo != null ">  user_student_no = #{userStudentNo,jdbcType=VARCHAR} , </if>
 		</trim>
 
 		
@@ -204,6 +204,9 @@
 		<if test="instituteId != null and instituteId!=''">
 			and u.user_institute_id = #{instituteId,jdbcType=VARCHAR}
 		</if>
+		<if test="yearIn != null and yearIn !=''">
+			and u.user_in_university_date = #{yearIn,jdbcType=VARCHAR}
+		</if>
 		limit #{startIndex,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER} 
 	</select>
 	
@@ -219,8 +222,13 @@
 		<if test="instituteId != null and instituteId!=''">
 			and u.user_institute_id = #{instituteId,jdbcType=VARCHAR}
 		</if>
+		<if test="yearIn != null and yearIn !=''">
+			and u.user_in_university_date = #{yearIn,jdbcType=VARCHAR}
+		</if>
 	</select>
 	
-	
+	<select id="getYearInList" resultType="string">
+		select DISTINCT(u.user_in_university_date) from userinfo u where u.user_in_university_date is not null ORDER BY u.user_in_university_date desc;
+	</select>
 	
 </mapper>

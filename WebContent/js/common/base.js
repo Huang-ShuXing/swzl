@@ -116,6 +116,32 @@ $(document).ready(function(){
 		    });
 			return getData;
 	 }
+	 ajaxPostData = function(url,params,turnUrl){
+		 var getData ;
+		 $.ajax({
+	         url: "/ssm_wechat/goods/saveGoods.do",
+	         async:false,
+	         type: "POST",
+	         contentType : 'application/json;charset=utf-8', //设置请求头信息
+	         dataType:"json",
+	         data:params ,    //将Json对象序列化成Json字符串，JSON.stringify()原生态方法
+	         success: function(data){
+	        	 getData = data;
+	        	/* alert(data.msg);
+	        	 if(data.state == 1){
+	     			location.href=turnUrl;
+	        	 }*/
+	         },
+             error: function(res){
+                 //alert(res.responseText);
+                 alert("服务忙");
+             }
+	 });
+		 return getData;
+	 }
+	 
+	
+	 
 	 
 	 
 	 /**

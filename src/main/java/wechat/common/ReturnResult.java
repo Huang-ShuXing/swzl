@@ -17,6 +17,7 @@ public class ReturnResult {
 	private int state;
 	private String msg ;
 	public Map<String,Object> data ;
+	private Object obj;
 	
 	public ReturnResult(int state, String msg, Map<String, Object> data) {
 		super();
@@ -47,6 +48,12 @@ public class ReturnResult {
 	}
 	public void setData(Map<String, Object> data) {
 		this.data = data;
+	}
+	public Object getObj() {
+		return obj;
+	}
+	public void setObj(Object obj) {
+		this.obj = obj;
 	}
 	
 	

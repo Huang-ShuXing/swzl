@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link type="text/css" rel="stylesheet" href="${constant.projectName}/frame/css/menu.css" />
+<link type="text/css" rel="stylesheet" href="${constant.projectName}/frame/css/jquery.mmenu.all.css" />
+
+<!% include("../common/import.html"){}  %>
+<script src="${constant.projectName}/js/goods/goods.js"></script>
+
+<script src="${constant.projectName}/frame/js/fileinput.min.js"></script>
+<script src="${constant.projectName}/frame/js/jquery.form.min.js"></script>
+<link rel="stylesheet" href="${constant.projectName}/frame/css/fileinput.min.css">
+<!-- <script src="${constant.projectName}/js/goods/upImg.js"></script> -->
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+	<title>${method=='0'?'捡到物品':'报失物品'}</title>
+	
+	<style type="text/css">
+	.dotline { 
+	margin:0px 15px 15px 15px;
+    border-color :#c5bbbb;
+    
+} 
+.modal-backdrop.in{
+z-index:0;
+opacity: 0;
+}
+.div_lebel{
+	 margin:5px 2px;
+	 width:auto; 
+	 display:inline-block !important; 
+	 display:inline; 	
+}
+.delete_type{
+	vertical-align: super;padding:0px;
+}
+#nav_new_bdyun{
+	background: white !important;
+}
+#nav_new_bdyun .mm-panels{
+	border-top :1px solid #CCCCCC;
+}
+#nav_new_bdyun form div{
+	margin-top : 8px;
+}
+#nav_new_bdyun form div input{
+	padding-left: 12px;
+}
+.clsCheckBox{  
+    display:none !important;  
+  }
+ .sds{
+ 	position: absolute;
+	display: block;
+	left: 0;
+	top: 0;
+	overflow: hidden;
+ 	height: 0;
+ 	 width: 0;
+   /*  border-left: 50px solid transparent; */
+    border-right: 20px solid transparent; 
+    border-top: 20px solid #FFEA00;
+    }
+ .bg_green{
+ 	background-color: greed;
+ }
+ select {
+ 	height:34px;
+ }
+ .my_left {
+ padding-left: 25px!important; 
+ }
+ .border_1_solid{
+ 	border-color: #00a5e0 !important;
+ }
+ .ul_img{
+ padding-left: 0;padding-bottom: 1px;margin-bottom: 20px;list-style: none;overflow: hidden;padding : 5px 15px;
+ }
+ .ul_img li{
+ margin-right:2px;
+ margin-bottom:2px;
+ }
+ 
+ .ul_img li span{
+	font-size:30px;
+	margin-top:5px;
+	color:#AEA2A2;
+	
+ }
+ .add {
+ float: left;
+width: 60px;
+height: 60px;;
+padding: 8px; 
+margin: 0 -1px -1px 0;
+font-size: 12px;
+line-height: 1.4;
+text-align: center;
+border: 1px solid #ddd;
+ }
+ 
+ 
+ .add:hover, .add:focus, .add:active,.add.active, .open .dropdown-toggle.add{
+ color: #333;
+background-color: #ebebeb;
+border-color: #adadad;
+ }
+ .up_img{
+ postition:absolute;clip:rect(100px  100px 10px 50px);float:left;margin-right:2px;border: 1px solid #ddd;
+ }
+ .li_cover{
+	width: 60px;  
+    height: 60px;  
+    overflow: hidden;  
+    border: 1px solid #ddd;  
+    position: relative;
+    float:left  
+    }
+ .img_width{
+   
+    height: 100%;  
+    width: auto;  
+    left:50%;  
+    position: relative;  
+    -webkit-transform: translateX(-50%);  
+    -ms-transform: translateX(-50%);  
+    -moz-transform: translateX(-50%);  
+}
+
+.img_height{
+        width: 100%;  
+    height: auto;  
+    top:50%;  
+    -webkit-transform: translateY(-50%);  
+    -ms-transform: translateY(-50%);  
+    -moz-transform: translateY(-50%);  
+    position: relative;  
+}
+</style>
+<script type="text/javascript">
+	$(function() {
+		$("#nav_new_bdyun").mmenu({
+			counters : true,
+			scrollBugFix : {
+				fix : true
+			},
+			offCanvas : {
+				position : "bottom",
+				zposition : "front",
+				moveBackground : true
+			},
+			autoHeight:{
+				height: "default"
+			}
+		}).on('click', 'a[href^="#/"]', function() {
+			alert("Thank you for clicking, but that's a demo link.");
+			return false;
+		});
+	});
+</script>
+</head>
+
+<body>
+<div id="page" style="padding-top:40px;padding-bottom: 45px;">
+<!% include("../common/menu.html"){}%>
+<footer class="ui-footer ui-footer-btn" style="height: auto;">
+<div class="ui-form-item ">
+			 <span id="btn_add_goods"  class="input-group-addon btn"  style="border-radius: 4px;border-left: 1;line-height: 25px;"id="basic-addon1">提交</span>
+			 </div>
+</footer>
+
+
+<!-- <form action="" method="post" style="" class="nice-validator n-default"> -->
+			<div class="ui-form-item  ">
+			 	<h3 class="ui-border-b" style="text-align: center;line-height: 45px;">
+			 		<strong>${method=='0'?'捡到物品':'报失物品'}</strong>
+			 	</h3>				
+			</div>
+			
+			<div id="div_new_by_label" style="padding-left: 15px; padding-right: 15px; margin-bottom: 0px; margin-top: 0px;">
+					
+					<!% for(type in typeList){  
+					%>
+						
+						<div class="div_lebel"  >
+							<div style="position: relative;">
+							<!% if(type.id == '0' ){ %>
+							<span class="btn btn-default border_1_solid" style="font-size: 90%; border-radius:0;">${type.name}
+								<input id="goods_goodsStype" value="${type.id}" type="checkbox"  name ="goods_goodsStype" class="clsCheckBox" checked="checked">
+							</span>
+							<!% } else{%>
+							<span class="btn btn-default " style="font-size: 90%; border-radius:0;">${type.name}
+								<input value="${type.id}" type="checkbox"  name ="goods_goodsStype" class="clsCheckBox" >
+							</span>
+							<!% } %>
+							
+							</div>
+						</div>
+					<!% } %>
+				</div>
+			<div id="div_name" class="ui-form-item  ">
+			  <input id="goods_name" type="text" class="form-control my_left" placeholder="物品名称" aria-describedby="basic-addon1">
+			</div>
+			
+			<div class="ui-form-item"  style="display:none">
+			  <input id="goods_method"   type="text" class="form-control my_left"  value="${method!'0'}" placeholder="捡到还是丢失" aria-describedby="basic-addon1">
+			  <input id="goods_goodsStatus"   type="text" class="form-control my_left"  value="${method!'0'}" placeholder="0-找物品，1-找主人" aria-describedby="basic-addon1">
+			</div>
+			<div id="div_student" style="display:none">
+		    		<!-- <div class="ui-form-item " >
+							 <div class="ui-select" style="width: 92% ;height:34px;margin-left:25px;    ">
+								<select id="goods_studentInstituteName" name="goods_studentInstituteName" placeholder="学院">
+									<option value="">请选择学院</option>
+									<!%for(institute in instituteList){%>
+									<option value="${institute.instituteName}" >${institute.instituteName}</option>
+									<!% } %>
+								</select>
+							</div>
+						
+					</div> -->
+					<div class="ui-form-item  ">
+					  <input id="goods_studentCard" type="text" class="form-control my_left" placeholder="学号" aria-describedby="basic-addon1">
+					</div>
+					
+					
+					<div class="ui-form-item  ">
+					  	<input id="goods_studentName" type="text" class="form-control my_left" placeholder="姓名" aria-describedby="basic-addon1">
+					</div>
+			</div>
+			
+			<div id="div_bank" style="display:none">
+				<div class="ui-form-item  ">
+					  <input id="goods_bankName" type="text" class="form-control my_left" placeholder="银行名称" aria-describedby="basic-addon1">
+					</div>					
+					<div class="ui-form-item  ">
+					  	<input id="goods_bankCard" type="text" class="form-control my_left" placeholder="银行卡号" aria-describedby="basic-addon1">
+					</div>
+			</div>
+			
+			
+			<div class="ui-form-item  ">
+			  	<input id="goods_happendTime" type="date" class="form-control my_left" placeholder="什么时候捡到" aria-describedby="basic-addon1">
+			</div>
+			<div class="ui-form-item  ">
+			  	<input id="goods_happendAddress" type="text" class="form-control my_left" placeholder="地点" aria-describedby="basic-addon1">
+			</div>
+			<div class="ui-form-item  ">
+			  	<input id="goods_goodsComment" type="text" class="form-control my_left" placeholder="备注" aria-describedby="basic-addon1">
+			</div>
+			<form   id="uploadForm" method="POST" enctype="MULTIPART/FORM-DATA"  action="">	
+						
+						<input id="file_upload" name="file" type="file"    style="display:none"/>			
+			</form>
+			
+			<ul id="id_ul_img"  class="ul_img">
+			
+			<li  class="add">
+					<span onclick="file_upload.click()" class="glyphicon glyphicon-plus   "  ></span>
+			</li>			
+			<!-- 先不做去除图片 
+			<li class="add">
+					<span  onclick="file_upload.click()" class="glyphicon glyphicon-minus   "  ></span>
+			</li>
+		
+			<li class="add" style="position: relative;">
+					<span  onclick="file_upload.click()" class="glyphicon glyphicon-minus   "  ></span>
+					<button type="button" class="close" style="position: absolute;line-height: 0;">
+							 <span aria-hidden="true" style="color:red">&times;</span>
+							 <span class="sr-only">Close</span>
+					</button>
+					<span class="glyphicon glyphicon-remove" style="position: absolute;"></span>
+			</li> 
+			-->
+
+		
+			</ul>			
+
+			<hr class=dotline > 
+			<p class="text-center" ><strong>${method=='0'?'拾获人信息':'丢失者信息'}</strong></p>
+			
+			<div class="ui-form-item  ">
+			  	<input id="goods_peopleName" type="text" class="form-control my_left" placeholder="联系人姓名" aria-describedby="basic-addon1">
+			</div>
+			<div class="ui-form-item " style="padding-left: 0px;padding-right: 0px;" ><!-- ui-form-item-l ui-border-b -->
+									
+					<div class="ui-select" style="width: 92% ;height:34px;margin-left:25px;">
+						<select id="goods_peopleCollege" name="goods_peopleCollege" style="border-top: 1px solid #EAEAEA;padding-left: 12px;">
+							<option value="">请选择学院</option>
+							<!%for(institute in instituteList){%>
+							<option value="${institute.instituteName}" >${institute.instituteName}</option>
+							<!% } %>
+						</select>
+					</div>
+			</div>
+			<div class="ui-form-item  ">
+			  	<input id="goods_peopleContact" type="text" class="form-control my_left" placeholder="联系方式" aria-describedby="basic-addon1">
+			</div>
+			<!-- <div class="ui-form-item  ">
+			  	<input id="goods_peopleQq" type="text" class="form-control my_left" placeholder="QQ" aria-describedby="basic-addon1">
+			</div>
+			<div class="ui-form-item  ">
+			  	<input id="goods_peopleWechat" type="text" class="form-control my_left" placeholder="微信" aria-describedby="basic-addon1">
+			</div>	 -->		
+    	<!-- </form> -->
+
+</div>
+   
+</body>
+</html>

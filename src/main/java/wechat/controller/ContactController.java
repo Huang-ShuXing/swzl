@@ -175,14 +175,19 @@ public class ContactController {
 			mav.addObject("majorList", majorList);
 		}
 		
+	
 		
 		mav.addObject("wechatOpenId", openId);
 		/*mav.setViewName("index.html");*/
 		mav.setViewName("contact/updateContact.html");
 		
+		
+		
 		/*入学毕业时间*/
 		mav.addObject("inDateList",DateUtil.getInUniversityDateList());
 		mav.addObject("outDateList", DateUtil.getOutUniversityDateList());
+		
+		
 		
 		/*宿舍楼*/
 		List<Dorm> dormList = dormService.getListAllDorm();
@@ -200,6 +205,10 @@ public class ContactController {
 		Page<UserInfo> userPage = userService.getPage(map, page);
 		/*List<UserInfo> userList = userService.getList(map);*/
 	    /*System.out.println("size:"+userList.size());*/
+		/*年级列表 用于查询*/
+		List<String> yearInList = userService.getYearInList(); 
+		
+		model.addAttribute("yearInList", yearInList);
 		model.addAttribute("userPage", userPage);
 		return ("contact/contact_index.html");
 	}
@@ -213,12 +222,13 @@ public class ContactController {
 	}
 	
 	@RequestMapping("/ajaxUserList")
-	public String getResultList(Model model,String name,String instituteId,String returnUrl,String tagName){
+	public String getResultList(Model model,String name,String instituteId,String yearIn,String returnUrl,String tagName){
 		System.out.println("name:"+name+"url:"+returnUrl+"instituteId:"+instituteId+"tagName:"+tagName);
 		HashMap<String,Object>  map = new HashMap<String,Object>();
 		Page<UserInfo> page = new Page<>();
 		map.put("name", name);
 		map.put("instituteId", instituteId);
+		map.put("yearIn", yearIn);
 		Page<UserInfo> userPage = userService.getPage(map, page);
 		/*List<UserInfo> userList = userService.getList(map);*/
 		/*System.out.println("size:"+userList.size());*/

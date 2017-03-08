@@ -80,4 +80,9 @@ public class UserServiceImpl implements IUserService {
 		
 	}
 
+	@Override
+	public List<String> getYearInList() {
+		return dao.getYearInList();
+	}
+
 }

@@ -43,6 +43,9 @@ public class ShareResourceServiceImpl implements IShareResourceService {
 			resource.setPassword("无");
 		}
 		//插入类型
+		if(MyStringUtil.isEmpty(typeId)){
+			typeId = "0";
+		}
 		ResourceType rt = new ResourceType(MyStringUtil.getId(),typeId,resource.getId(),null);
 		
 		if( rtDao.insert(rt)>0 && dao.insert(resource) > 0){
@@ -51,6 +54,9 @@ public class ShareResourceServiceImpl implements IShareResourceService {
 		}else{
 			rr.setMsg("添加失败，请稍后再添加");
 		}
+		
+		
+		
 		
 		return rr;
 	}

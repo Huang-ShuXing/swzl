@@ -25,6 +25,9 @@ public class IndexController {
 		
 		Wechat wechat =  new Wechat();
 		wechat = wechatService.getByOpenId(openId);
+		if(wechat==null){
+			return "common/openFormWechat.html";	
+		}
 		model.addAttribute("wechat", wechat);
 		//return "contact/mmenu.html";
 		/*return "index.html";*/

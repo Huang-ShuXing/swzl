@@ -60,7 +60,7 @@ public class WechatController {
 		}else{
 			if(!userService.isAll(wechat.getOpenid())){
 				//验证信息完全不 如果完全。。
-				result.setMsg("请先完善您的个人信息之后再申请验证");
+				result.setMsg("请先完善您的个人信息之后再申请验证(学院专业必填)");
 			}else {
 				wechat.setIsAttestation(Wechat.ATTESTATION_ING);
 				wechatService.update(wechat);

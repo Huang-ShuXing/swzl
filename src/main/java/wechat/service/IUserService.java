@@ -48,6 +48,12 @@ public interface IUserService {
 	 * @return
 	 */
 	public boolean isAll(String openId);
-		
+	 /**
+	  * 获取web中所有的年级
+	  * @author Huang_Shuxing
+	  * 2016年9月11日 上午9:09:30
+	  * @return
+	  */
+	public List<String> getYearInList();
 	
 }

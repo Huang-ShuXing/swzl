@@ -29,7 +29,6 @@ $(document).ready(function(){
 	});
 	$("#addHome").submit(function(e){
 		e.preventDefault();
-		alert("addHome事件")
 		var homeTown = $("#homeTown").val();
 		var homeVillage = $("#homeVillage").val();
 		

@@ -1,0 +1,16 @@
+<div th:fragment="goodsTable(list)" >
+	<table>
+			<thead>
+				<tr>
+					<td><strong>学院</strong></td>
+					<td><strong>名字</strong></td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each = "goods : ${list}">
+					<td th:text="${goods.peopleCollege}"></td>
+					<td th:text="${goods.name}"></td>
+				</tr>
+			</tbody>
+			</table>	
+	</div>

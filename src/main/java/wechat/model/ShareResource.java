@@ -16,6 +16,9 @@ public class ShareResource {
 	private int state; 
 	private int disableNum;
 	private Date updateTime;
+	
+	private Type type;
+	
 	public String getId() {
 		return id;
 	}
@@ -63,6 +66,12 @@ public class ShareResource {
 	}
 	public void setUpdateTime(Date updateTime) {
 		this.updateTime = updateTime;
+	}
+	public Type getType() {
+		return type;
+	}
+	public void setType(Type type) {
+		this.type = type;
 	}
 	
 	

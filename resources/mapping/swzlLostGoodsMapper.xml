@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+        <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="wechat.dao.SwzlLostGoodsDao">
+	
+	<resultMap id="goods" type="wechat.model.SwzlLostGoods">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="student_institute_name" property="studentInstituteName" jdbcType="VARCHAR" />
+		<result column="student_name" property="studentName" jdbcType="VARCHAR" />
+		
+		<result column="student_card" property="studentCard" jdbcType="VARCHAR" />
+		<result column="bank_name" property="bankName" jdbcType="VARCHAR" />
+		<result column="bank_card" property="bankCard" jdbcType="VARCHAR" />
+		<result column="memo" property="memo" jdbcType="VARCHAR" />
+		<result column="method" property="method" jdbcType="INTEGER" />
+		<result column="happend_time" property="happendTime" jdbcType="TIMESTAMP" />
+		<result column="happend_address" property="happendAddress" jdbcType="VARCHAR" />
+		<result column="goods_stype" property="goodsStype" jdbcType="VARCHAR" />
+		<result column="goods_comment" property="goodsComment" jdbcType="VARCHAR" />
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+		<result column="click_count" property="clickCount" jdbcType="INTEGER" />
+		<result column="goods_status" property="goodsStatus" jdbcType="INTEGER" />
+		<result column="people_name" property="peopleName" jdbcType="VARCHAR" />
+		<result column="people_college" property="peopleCollege" jdbcType="VARCHAR" />
+		<result column="people_contact" property="peopleContact" jdbcType="VARCHAR" />
+		<result column="people_qq" property="peopleQq" jdbcType="VARCHAR" />
+		<result column="people_wechat" property="peopleWechat" jdbcType="VARCHAR" />
+		<collection property="imgList" resultMap="imgListResult" />
+	</resultMap>
+ 	
+ 	
+ 	<resultMap id="imgListResult" type="wechat.model.GoodsImg">
+		<id column="img_id" property="id" jdbcType="VARCHAR" />
+		<result column="img_url" property="imgUrl" jdbcType="VARCHAR" />
+		<result column="goods_id" property="goodsId" jdbcType="VARCHAR" />
+		<result column="state" property="state" jdbcType="INTEGER" />		
+	</resultMap>
+ 	
+ 	<select id="getList" resultMap="goods" parameterType="hashmap">
+ 		 select slg.* ,gi.id as img_id,gi.img_url from ( 
+ 		 select a.* from swzl_lost_goods a   where 1 = 1 and status = 0 
+ 		 <if test="method != null and method !=''">
+			 and  a.method = #{method}
+		 </if>
+		 
+		 <if test="typeIds != null and typeIds !=''">
+			 and a.goods_stype in 
+				<foreach collection="typeIds" index="index" item="item" open="(" separator="," close=")">
+              	#{item}
+         		</foreach> 
+		</if>
+		<if test="name != null and name !=''">
+			and a.name like #{name,jdbcType=VARCHAR}
+		</if>
+		 	order by a.update_time desc 
+			limit #{startIndex,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
+			 )  slg left join goods_img gi on slg.id  = gi.goods_id
+	</select>
+ 		
+ 	
+ 	<select id="getCount"  resultType="java.lang.Integer"  parameterType="hashmap">
+		<![CDATA[
+		select count(a.id) as count from swzl_lost_goods a where 1=1 and status = 0 
+		]]>
+		<if test="method != null and method !=''">
+			 and a.method = #{method}
+		</if>
+		
+		<if test="typeIds != null and typeIds !=''">
+			 and a.goods_stype in 
+				<foreach collection="typeIds" index="index" item="item" open="(" separator="," close=")">
+              	#{item}
+         		</foreach> 
+		</if>
+	
+		<if test="name != null and name !=''">
+			and a.name like #{name,jdbcType=VARCHAR}
+		</if>
+		
+		
+		
+		
+		
+	</select>
+ 	
+ 	
+ 	<insert id="insertGoods" parameterType ="wechat.model.SwzlLostGoods">
+ 		  <![CDATA[ 
+ 		  	INSERT INTO `swzl_lost_goods` (
+	`id`,
+	`name`,
+	`student_institute_name`,
+	`student_name`,
+	`student_card`,
+	`bank_name`,
+	`bank_card`,
+	`memo`,
+	`method`,
+	`happend_time`,
+	`happend_address`,
+	`goods_stype`,
+	`goods_comment`,
+	`update_time`,
+	`click_count`,
+	`goods_status`,
+	`people_name`,
+	`people_college`,
+	`people_contact`,
+	`people_qq`,
+	`people_wechat`
+)
+VALUES
+	(
+		#{id},
+		#{name},
+		#{studentInstituteName},
+		#{studentName},
+		#{studentCard},
+		#{bankName},
+		#{bankCard},
+		#{memo},
+		#{method},
+		#{happendTime},
+		#{happendAddress},
+		#{goodsStype},
+		#{goodsComment},
+		#{updateTime},
+		#{clickCount},
+		#{goodsStatus},
+		#{peopleName},
+		#{peopleCollege},
+		#{peopleContact},
+		#{peopleQq},
+		#{peopleWechat}
+	)
+	       ]]>
+ 	</insert>
+ 	
+ 	 <update id="updateByKey" parameterType="wechat.model.SwzlLostGoods" >
+    update swzl_lost_goods
+    <set >
+      <if test="name != null and name!='' " >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="method != null" >
+        method = #{method,jdbcType=INTEGER},
+      </if>
+      <if test="happendTime != null" >
+        happend_time = #{happendTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="happendAddress != null and happendAddress !='' " >
+        happend_address = #{happendAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsStype != null and goodsStype !='' " >
+        goods_stype = #{goodsStype,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsComment != null and goodsComment !='' " >
+        goods_comment = #{goodsComment,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="clickCount != null" >
+        click_count = #{clickCount,jdbcType=INTEGER},
+      </if>
+      <if test="goodsStatus != null" >
+        goods_status = #{goodsStatus,jdbcType=INTEGER},
+      </if>
+      <if test="peopleName != null and peopleName!='' " >
+        people_name = #{peopleName,jdbcType=VARCHAR},
+      </if>
+      <if test="peopleCollege != null and peopleCollege!='' " >
+        people_college = #{peopleCollege,jdbcType=VARCHAR},
+      </if>
+      <if test="peopleContact != null and peopleContact!='' " >
+        people_contact = #{peopleContact,jdbcType=VARCHAR},
+      </if>
+      <if test="peopleQq != null and peopleQq !='' " >
+        people_qq = #{peopleQq,jdbcType=VARCHAR},
+      </if>
+      <if test="peopleWechat != null and peopleWechat !='' " >
+        people_wechat = #{peopleWechat,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+   <update id="finishGoods" parameterType="string">
+    update swzl_lost_goods
+    <set >
+        goods_status =2
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+ 	
+ 	 <update id="deleteGoods" parameterType="string">
+    update swzl_lost_goods
+    <set >
+       status =1
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+</mapper>

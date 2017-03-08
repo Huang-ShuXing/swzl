@@ -62,10 +62,10 @@ ulAjaxDetail input {
 		<section id="list">
 			<div class="demo-item">
 				<div class="ui-form-item ui-border-b">
-					<input type="text" id="condition_name" placeholder="请输入查询的姓名"
-						style="padding-top: 15px; padding-left: 0px; float: left; width: 40%; line-height: 14px;">
-					<div style="width: 60%" class="ui-select-group">
-						<div class="ui-select" style="width: 100%">
+					<input type="text" id="condition_name" placeholder="输入查询姓名"
+						style="padding-top: 15px; padding-left: 0px; float: left; width: 30%; line-height: 14px;">
+					<div style="width: 70%" class="ui-select-group">
+						<div class="ui-select" style="width: 68%">
 							<select id="condition_instituteId">
 								<option value="">全校</option>
 								<!%
@@ -75,6 +75,18 @@ ulAjaxDetail input {
 								<!%
 						}
 						%>
+							</select>
+						</div>
+						<div class="ui-select" style="width: 27%;float:left; margin-right: 0px;">
+							<select id="condition_yearIn"style="padding-right:0px;" >
+								<option value="">全年级</option>
+								<!%
+								for(yearIn in yearInList){
+								%>
+								<option value="${yearIn}">${yearIn}级</option>
+								<!%
+								}
+								%>
 							</select>
 						</div>
 
@@ -93,11 +105,17 @@ ulAjaxDetail input {
 						<!%for(user in userPage.dataList){
 							flag = true;
 						%>
-						
+						<!-- color:#18B4ED -->
 						<li class="btn-default " style="width:100%;cursor: pointer;padding-left:15px;margin-left:0px;">
 							<div style="height: 100%;width:35px;">
-								<img class="img-circle" 
-									src="${user.wechat.headimgurl}" height="30px;" width="30px" style="float:left">
+								<!% if(user.userSex == 2){ %>
+								<span style="color:#F29EB9;float:left;font-size:18px ;margin-right:5px;"  class="glyphicon glyphicon-user"></span>
+								<!% } else {%>
+								<span style="color:#18B4ED;float:left;font-size:18px ;margin-right:5px;"  class="glyphicon glyphicon-user"></span>
+								<!% }%>
+								
+								<!-- <img class="img-circle" 
+									src="${user.wechat.headimgurl}" height="30px;" width="30px" style="float:left"> -->
 							</div>
 							<div id="div_content" style="width:auto;padding-left:5px;padding-right:5px;" class="ui-list-info"  >								
 								<span class="ui-nowrap" >${user.userName}</span>

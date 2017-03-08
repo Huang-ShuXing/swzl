@@ -44,6 +44,13 @@ public interface UserInfoDao {
 	 * @return
 	 */
 	public Integer getCount(HashMap<String, Object> map);
-	
+	/**
+	 * 查询所有的年级
+	 * 
+	 * @author Huang_Shuxing
+	 * 2016年9月11日 上午9:03:51
+	 * @return
+	 */
+	public List<String> getYearInList();
 	
 }

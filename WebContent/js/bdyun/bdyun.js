@@ -4,6 +4,10 @@ $(document).ready(function(){
 		
 		var title = $("#sr_title").val();
 		var url = $("#sr_url").val();
+	
+		if(url.substring(0,7) !="http://"){
+			url = "http://"+url;
+		}
 		var password = $("#sr_password").val();
 		var type = $("input[name=cbox_value]:checked").val();
 		
@@ -119,10 +123,12 @@ $(document).ready(function(){
 		
 		var flag = checkBox.prop("checked");
 		if(flag){
-			$(this).children("div").children("div").removeClass("sds");
+			//$(this).removeClass("bg_green");
+			$(this).children("div").children("span").removeClass("border_1_solid");
 			checkBox.removeAttr("checked");
 		}else {
-			$(this).children("div").children("div").addClass("sds");
+			//$(this).addClass("bg_green");
+			$(this).children("div").children("span").addClass("border_1_solid");
 			checkBox.prop("checked",true);
 			
 		}

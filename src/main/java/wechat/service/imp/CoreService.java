@@ -23,6 +23,7 @@ import wechat.model.UserInfo;
 import wechat.model.Wechat;
 import wechat.service.ICoreService;
 import wechat.util.MessageUtil;
+import wechat.util.MyStringUtil;
 import wechat.util.PropertiesUtil;
 import wechat.util.WeixinUtil;
 import wechat.util.pojo.AccessToken;
@@ -73,7 +74,7 @@ public class CoreService implements ICoreService{
             
             
             //回复图片信息
-            /*NewsMessage newsMessage = new NewsMessage();
+            NewsMessage newsMessage = new NewsMessage();
             newsMessage.setToUserName(fromUserName);  
             newsMessage.setFromUserName(toUserName);  
             newsMessage.setCreateTime(new Date().getTime());  
@@ -83,17 +84,19 @@ public class CoreService implements ICoreService{
             List<Article> articleList = new ArrayList<Article>();
             Article article = new Article();  
 
-            article.setTitle("微信公众帐号开发教程Java版");  
+            /*article.setTitle("微信公众帐号开发教程Java版");  
             article.setDescription("柳峰，80后，微信公众帐号开发经验4个月。为帮助初学者入门，特推出此系列教程，也希望借此机会认识更多同行！");  
             article.setPicUrl("https://mmbiz.qlogo.cn/mmbiz/WJI5zSOY8KKPWZ0cBIOECZTc4pmGK5fWgrnvcAZMg32kPicZnF10fIprwd7aYVrDibqNarLWuDhO8Qbs3gfuGL0w/0?wx_fmt=jpeg");  
             article.setUrl("http://blog.csdn.net/lyq8479");  
-            articleList.add(article);
+            articleList.add(article);*/
             
             article = new Article();
-            article.setTitle("微信公众帐号开发教程Java版222");  
-            article.setDescription("柳峰，80后，微信公众帐号开发经验4个月。为帮助初学者入门，特推出此系列教程，也希望借此机会认识更多同行！");  
-            article.setPicUrl("http://0.xiaoqrobot.duapp.com/images/avatar_liufeng.jpg");  
-            article.setUrl("http://blog.csdn.net/lyq8479");  
+            article.setTitle("广州大学陆丰同乡会");  
+            article.setDescription("广州大学陆丰同乡会");  
+            article.setPicUrl("");//图片链接  
+            article.setUrl("http://m.lftongxh.cn/ssm_wechat/index.do?openId="+fromUserName);  
+            /*http://testMyWeiXin.tunnel.qydev.com*/
+            /*http://m.lftongxh.cn*/
             articleList.add(article);  
             
             //设置图文消息个数
@@ -101,13 +104,16 @@ public class CoreService implements ICoreService{
             //设置图文消息包含的图文集合
             newsMessage.setArticles(articleList);  
             
-*/            
+           
             // 文本消息  
             if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_TEXT)) {
             	if(content.startsWith("#")){
             		respContent = manager(content);
-            	}else {
-                respContent = "您发送的是文本消息！";
+            	}else if(content.equals("同乡会")||content.equals("陆丰同乡会")){
+            		respMessage = MessageUtil.newsMessageToXml(newsMessage);
+            		insertOrUpdateWechat(fromUserName);
+            	}else{
+            		respContent = "您发送的是文本消息！";
             	}
                 
                 
@@ -134,9 +140,10 @@ public class CoreService implements ICoreService{
                 String eventType = requestMap.get("Event");  
                 // 订阅  
                 if (eventType.equals(MessageUtil.EVENT_TYPE_SUBSCRIBE)) {  
-                    respContent = "谢谢您的关注！";
+                    //respContent = "谢谢您的关注！";
                     //插入新订阅者信息
                     //也插入一个微信的信息
+                	respMessage = MessageUtil.newsMessageToXml(newsMessage);
                     insertOrUpdateWechat(fromUserName);
                 }  
                 // 取消订阅  
@@ -155,9 +162,12 @@ public class CoreService implements ICoreService{
                 }
                 
             }  
-  
-            textMessage.setContent(respContent);  
-            respMessage = MessageUtil.textMessageToXml(textMessage);
+            if(respMessage == null){
+            	textMessage.setContent(respContent);  
+                respMessage = MessageUtil.textMessageToXml(textMessage);
+            }
+           /* textMessage.setContent(respContent);  
+            respMessage = MessageUtil.textMessageToXml(textMessage);*/
             
             /*respMessage = MessageUtil.newsMessageToXml(newsMessage);*/
         } catch (Exception e) {  
@@ -170,17 +180,33 @@ public class CoreService implements ICoreService{
 	
 	@Override
     public  void insertOrUpdateWechat(String openId){
-		String pathUrl = "/wechat.properties";
+		/*String pathUrl = "/wechat.properties";
 		Properties pro = PropertiesUtil.getProperties(pathUrl);
     	AccessToken accessTken =  WeixinUtil.getAccessToken(pro.get("appid").toString(),pro.get("appsecret").toString());
     	Wechat wechat  =WeixinUtil.getWechat(openId, accessTken.getToken());
+    	wechat.setIsAttestation(Integer.valueOf(pro.get("isAttention").toString()));
+    	
     	UserInfo userInfo = new UserInfo();
     	userInfo.setId(wechat.getId());
     	userInfo.setUserWechatOpenId(wechat.getOpenid());
+    	
+    	wechatDao.insertOrUpdate(wechat);
+    	userInfoDao.insert(userInfo);*/
+		String pathUrl = "/wechat.properties";
+		Properties pro = PropertiesUtil.getProperties(pathUrl);
+		Wechat wechat  = new Wechat();
+		wechat.setId(MyStringUtil.getId());
+		wechat.setOpenid(openId);
+    	wechat.setIsAttestation(Integer.valueOf(pro.get("isAttention").toString()));
+    	
+    	UserInfo userInfo = new UserInfo();
+    	userInfo.setId(wechat.getId());
+    	userInfo.setUserWechatOpenId(wechat.getOpenid());
+    	
     	wechatDao.insertOrUpdate(wechat);
     	userInfoDao.insert(userInfo);
     	
-    	
+		
     }
     
     /**

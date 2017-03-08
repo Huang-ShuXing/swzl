@@ -24,6 +24,7 @@ z-index:-1;
 .modal-backdrop{
 z-index:0;
 }
+
 </style>
  
 
@@ -43,8 +44,7 @@ z-index:0;
 
 			<div class="ui-form-item ui-border-b">
 				<label> 出生日期</label>
-				<input  type="text" id="userBirthday"
-					 style="width: 75%;" name="userBirthday" data-rule="required" value="${user.userBirthday!,dateFormat='yyyy-MM-dd'}" placeholder="日期格式如 ：1993-01-01">
+				<input  type="text" id="userBirthday" style="width: 75%;" name="userBirthday"  value="${user.userBirthday!,dateFormat='yyyy-MM-dd'}" placeholder="格式：1993-01-01">
 					<a href="javascript:void(0)" class="ui-icon-close"> </a>
 			</div>
 			<!-- data-tip="日期格式如 ：1993-01-01" -->
@@ -61,15 +61,15 @@ z-index:0;
 			</div>
 			<!-- data-tip="您在广州大学的学号"  -->
 			<div class="ui-form-item  ui-border-b">
-				<label> QQ </label> <input type="text" data-rule="required" style="width: 75%;" 
+				<label> QQ </label> <input type="text"  style="width: 75%;" 
 					value="${user.userQq!}" id="userQq" name="userQq"
 					placeholder="请输入你的QQ">
 				<a href="javascript:void(0)" class="ui-icon-close"> </a>
 			</div>
 
-			<div class="ui-form-item ui-form-item-l ui-border-b">
-				<label class="ui-border-r"> 中国 +86 </label> <input type="text" data-rule="required;mobile"
-					style="width:75%"
+			<div class="ui-form-item  ui-border-b">
+				<label > 中国 +86 </label> <input type="text" 
+					style="width:75%" data-rule="mobile"
 					value="${user.userContact!}" id="userContact" name="userContact"
 					placeholder="请输入你联系方式">
 				<a href="javascript:void(0)" class="ui-icon-close"> </a>
@@ -93,12 +93,13 @@ z-index:0;
 				<p>女</p>
 			</div>
 
-			<div class="ui-form-item ui-border-b">
-				<label>学院</label>
-				<div class="ui-select-group">
+			<div class="ui-form-item ui-form-item-l ui-border-b" >
+				<label  class="ui-border-r" >学院</label>
+				<div class="ui-select-group" >
+					
 					<div class="ui-select" style="width: 100%">
-						<select id="instituteSelect" name="userInstituteId">
-							<option>请选择</option>
+						<select id="instituteSelect" name="userInstituteId" >
+							<option value="">请选择</option>
 							<!%
 						for(institute in instituteList){
 							if(has(user)){%>
@@ -114,11 +115,12 @@ z-index:0;
 					</div>
 
 				</div>
+				
 			</div>
 
 
-			<div class="ui-form-item ui-border-b">
-				<label>专业</label>
+			<div class="ui-form-item ui-border-b ui-form-item-l">
+				<label class="ui-border-r">专业</label>
 				<div class="ui-select-group">
 					<div class="ui-select" style="width: 100%">
 						<select id="majorSelect" name="userMajorId">
@@ -169,10 +171,11 @@ z-index:0;
 			</div>
 
 			<div class="ui-form-item ui-border-b">
-				<label> <input class="ui-btn" type="button"
-					data-toggle="modal" data-target="#addHomeModel"
-					style="margin: 6px auto; width: 60px; padding-left: 0px; text-align: left;"
-					value="手写">
+				<label> 
+					<input class="ui-btn" data-toggle="modal"
+							data-target="#addHomeModel"
+							style="margin: 6px auto; border: 1px solid rgb(202, 204, 205); min-width: 30px; width: 45px; text-align: center; padding-left: 5px; padding-right: 5px;"
+							value="手写" type="button">
 				</label>
 				<div class="ui-select-group">
 					<div class="ui-select" style="width: 80%">
@@ -247,7 +250,7 @@ z-index:0;
 			<div class="ui-form-item ui-border-b">
 				<label>学位</label>
 				<div class="ui-select">
-					<select name="userDegree" id="userDegree">
+					<select name="userDegree" id="userDegree" >
 						<!% if(has(user)){%>
 						<option ${user.userDegree==0? 'selected=selected ' } value="0">本科</option>
 						<option ${user.userDegree==1? 'selected=selected ' } value="1">研究生</option>
@@ -283,7 +286,7 @@ z-index:0;
 					<span style="float: left" class="ui-txt-muted">栋</span>
 					<div class="ui-form-item  ui-border-b"
 						style="float: left; width: 40%;">
-						<input type="text" data-rule="required" style="padding-left: 0px;"
+						<input type="text"  style="padding-left: 0px;"
 							value="${user.userDormFloor!}" id="userDormFloor"
 							name="userDormFloor" placeholder="宿舍号">
 					</div>
@@ -294,7 +297,7 @@ z-index:0;
 
 			<div class="ui-form-item ui-border-b">
 				<label> 居住地</label><input type="text" id="userAddress"
-					name="userAddress" placeholder="非毕业生可以不填">
+					name="userAddress" placeholder="您可以写家庭地址" value="${user.userAddress!}">
 				<a href="javascript:void(0)" class="ui-icon-close"> </a>
 			</div>
 			<div class="ui-btn-wrap">
@@ -320,12 +323,12 @@ z-index:0;
 							<div class="ui-form-item  ui-border-b">
 								<label>镇</label> <input type="text" data-rule="required"
 									id="homeTown" name="homeTown" placeholder="请输入你所在镇">
-									<a href="javascript:void(0)" class="ui-icon-close"> </a>
+									<!-- <a href="javascript:void(0)" class="ui-icon-close"> </a> -->
 							</div>
 							<div class="ui-form-item  ui-border-b">
 								<label>村/街</label> <input type="text" data-rule="required"
 									id="homeVillage" name="homeVillage" placeholder="请输入你村/街道">
-									<a href="javascript:void(0)" class="ui-icon-close"> </a>
+									<!-- <a href="javascript:void(0)" class="ui-icon-close"> </a> -->
 							</div>
 
 
@@ -333,7 +336,7 @@ z-index:0;
 						<div class="modal-footer">
 							<button type="button" class="btn btn-default"
 								data-dismiss="modal">关闭</button>
-							<button type="submit">提交更改</button>
+							<button type="submit" class="btn btn-success">提交更改</button>
 
 
 						</div>

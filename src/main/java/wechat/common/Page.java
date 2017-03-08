@@ -10,9 +10,13 @@ public class Page<T> {
 	
 	private static int PAGE_PAGESIZE = 10;
 	static{
-		String pathUrl = "/page.properties";
-		Properties pro = PropertiesUtil.getProperties(pathUrl);
-		Page.PAGE_PAGESIZE = Integer.parseInt( pro.get("pageSize").toString());
+		try {
+			String pathUrl = "/page.properties";
+			Properties pro = PropertiesUtil.getProperties(pathUrl);
+			Page.PAGE_PAGESIZE = Integer.parseInt( pro.get("pageSize").toString());	
+		} catch (Exception e) {
+		}
+		
 	}
 	
     private int curPage = 1; // 当前页
